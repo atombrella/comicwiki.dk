@@ -1,0 +1,20 @@
+---
+- name: Install base packages
+  apt: name={{ item }} state=present
+  with_items:
+    - ca-certificates
+    - git
+    - python
+    - openssl
+
+- name: Create user for mads
+  user:
+    name: mads
+    shell: /bin/bash
+    groups: users,sudo
+    append: true
+
+- name: "Add authorized keys"
+  authorized_key:
+    user: mads
+    key: "{{ lookup('file', 'files/mads.key.pub') }}"
