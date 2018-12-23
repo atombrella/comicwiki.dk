@@ -7,3 +7,5 @@ composer.phar
 
 *.retry
 .vagrant*
+
+__pycache__
