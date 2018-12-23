@@ -2,16 +2,15 @@
 - name: Install apache2
   apt: name=apache2 state=latest update_cache=yes
 
-- name: Install PHP and Apache modules
+- name: Install Apache modules
   apt: name={{ item }} state=latest update_cache=yes
   with_items:
     - modsecurity-crs
     - libapache2-mod-php
-    - php7.2
-    - php7.2-mysqli
-    - php7.2-mbstring
-    - php7.2-json
-    - php7.2-common
+
+- name: Install mod_pagespeed
+  apt:
+    deb: https://dl-ssl.google.com/dl/linux/direct/mod-pagespeed-stable_current_amd64.deb
 
 - name: Create sites directories
   file:

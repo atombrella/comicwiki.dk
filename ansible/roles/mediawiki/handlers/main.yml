@@ -1,0 +1,5 @@
+---
+- name: update composer
+  composer:
+    command: update
+    working_dir: /var/www/html

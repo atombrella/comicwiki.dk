@@ -1,0 +1,12 @@
+{
+	"require": {
+	    "mediawiki/chameleon-skin": "~1.0"
+	},
+	"extra": {
+		"merge-plugin": {
+			"include": [
+				"extensions/example/composer.json"
+			]
+		}
+	}
+}

@@ -1,0 +1,88 @@
+---
+- name: Install PHP and mysql
+  apt: name={{ item }} state=present
+  with_items:
+    - php7.2
+    - php7.2-mysqli
+    - php7.2-mbstring
+    - php7.2-json
+    - php7.2-common
+    - php7.2-xml
+    - mysql-server
+    - mysql-client
+
+- name: Delete /var/www/html directory
+  file:
+    path: /var/www/html
+    state: absent
+  when: initial_installation
+
+- name: Install Mediawiki
+  git:
+    repo: https://gerrit.wikimedia.org/r/p/mediawiki/core.git
+    dest: /var/www/html/
+    version: REL1_31
+    depth: 1
+    update: false
+
+- name: Ensure owner rights for new installation
+  file:
+    path: /var/www/html
+    state: directory
+    owner: www-data
+    group: www-data
+    mode: u=rwX,g=rX,o=rX
+    recurse: true
+
+- include_tasks: composer.yml
+
+- name: Install dependencies via composer
+  composer:
+    command: install
+    working_dir: /var/www/html
+  become: true
+  become_user: www-data
+
+- name: Copy over the local settings file
+  template:
+    src: LocalSettings.php.j2
+    dest: /var/www/html/LocalSettings.php
+    mode: 0600
+    owner: www-data
+    group: www-data
+
+- name: Install local composer packages
+  copy:
+    src: composer.local.json
+    dest: /var/www/html/composer.local.json
+    owner: www-data
+    group: www-data
+    mode: 0644
+  notify: update composer
+
+- name: Install Mediawiki extensions
+  git:
+    repo: "{{ item.path }}"
+    dest: /var/www/html/extensions/{{ item.name }}
+    version: REL1_31
+    depth: 1
+    update: false
+  with_items:
+    - {path: 'https://gerrit.wikimedia.org/r/p/mediawiki/extensions/ParserFunctions.git', name: 'ParserFunctions'}
+    - {path: 'https://gerrit.wikimedia.org/r/p/mediawiki/extensions/WikiEditor.git', name: 'WikiEditor'}
+    - {path: 'https://gerrit.wikimedia.org/r/p/mediawiki/extensions/Cite.git', name: 'Cite'}
+  when: initial_installation
+
+- name: Create resources directory for comicwiki.dk
+  file:
+    path: /var/www/html/resources/comicwiki.dk/
+    state: directory
+    mode: 0755
+    owner: www-data
+    group: www-data
+
+- name: ignore comicwiki.dk resources dir
+  lineinfile:
+    path: /var/www/html/.git/info/exclude
+    line: 'resources/comicwiki.dk/'
+    state: present

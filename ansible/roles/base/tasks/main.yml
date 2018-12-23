@@ -6,6 +6,10 @@
     - git
     - python
     - openssl
+    - zip
+    - imagemagick
+    - openssh-server
+    - rsync
 
 - name: Create user for mads
   user:
@@ -14,7 +18,7 @@
     groups: users,sudo
     append: true
 
-- name: "Add authorized keys"
+- name: Add authorized keys
   authorized_key:
     user: mads
     key: "{{ lookup('file', 'files/mads.key.pub') }}"
