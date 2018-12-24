@@ -1,0 +1,68 @@
+---
+- name: Install fail2ban and iptables
+  apt: name={{ item }} state=present
+  with_items:
+    - iptables
+    - iptables-persistent
+    - fail2ban
+    - unattended-upgrades
+
+- name: itpables
+  iptables:
+    chain: INPUT
+    ctstate: ESTABLISHED,RELATED
+    jump: ACCEPT
+  become: true
+
+- name: Configure iptables ports
+  iptables:
+    chain: INPUT
+    protocol: tcp
+    destination_port: "{{ item }}"
+    ctstate: NEW
+    syn: match
+    jump: ACCEPT
+  with_items:
+    - 22
+    - 80
+    - 443
+
+- name: Firewall rule - allow all loopback traffic
+  iptables:
+    action: append
+    chain: INPUT
+    in_interface: lo
+    jump: ACCEPT
+
+- name: Firewall rule - drop any traffic without rule
+  iptables:
+    chain: "{{ item }}"
+    jump: DROP
+  with_items:
+    - INPUT
+    - FORWARD
+    - OUTPUT
+  notify: netfilter restart
+
+- name: SSH server settings
+  template:
+    src: sshd_config.j2
+    dest: /etc/ssh/sshd_config
+    mode: 0644
+    owner: root
+
+- name: Override some basic fail2ban configurations
+  template:
+    src: ../templates/jail.local.j2
+    dest: /etc/fail2ban/jail.local
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Activitate unattended upgrades
+  template:
+    src: 20auto-upgrades.j2
+    dest: /etc/apt/apt.conf.d/20auto-upgrades
+    owner: root
+    group: root
+    mode: 0644
