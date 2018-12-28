@@ -1,0 +1,17 @@
+renew_before_expiry = 14 days
+version = 0.26.1
+archive_dir = /etc/letsencrypt/archive/www.comicwiki.dk
+cert = /etc/letsencrypt/live/www.comicwiki.dk/cert.pem
+privkey = /etc/letsencrypt/live/www.comicwiki.dk/privkey.pem
+chain = /etc/letsencrypt/live/www.comicwiki.dk/chain.pem
+fullchain = /etc/letsencrypt/live/www.comicwiki.dk/fullchain.pem
+
+# Options used in the renewal process
+[renewalparams]
+authenticator = webroot
+account = {{ account }}
+rsa_key_size = 4096
+server = https://acme-v02.api.letsencrypt.org/directory
+[[webroot_map]]
+www.comicwiki.dk = /var/www/html
+comicwiki.dk = /var/www/html

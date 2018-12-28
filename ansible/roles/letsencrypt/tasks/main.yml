@@ -1,0 +1,60 @@
+---
+- name: Add PPA for certbot
+  apt_repository:
+    repo: 'ppa:certbot/certbot'
+    state: present
+    update_cache: true
+  become: true
+
+- name: Install certbot
+  apt: name=certbot state=present update_cache=true
+
+- name: Make cli.ini file
+  copy:
+    src: cli.ini
+    dest: /etc/letsencrypt/cli.ini
+    mode: 0644
+    group: root
+    owner: root
+  become: true
+
+- name: Make directories for hooks
+  file:
+    path: "/etc/letsencrypt/renewal-hooks/{{ item }}"
+    state: directory
+    mode: 0755
+    owner: root
+    group: root
+    recurse: true
+  with_items:
+    - pre
+    - post
+    - deploy
+  become: true
+
+- name: Make directories for hooks
+  file:
+    path: "/etc/letsencrypt/renewal/"
+    state: directory
+    mode: 0755
+    owner: root
+    group: root
+  become: true
+
+- name: Copy over configuration
+  template:
+    src: www.comicwiki.dk.conf.j2
+    dest: /etc/letsencrypt/renewal/www.comicwiki.dk.conf
+    mode: 0644
+    owner: root
+    group: root
+  become: true
+
+- name: Make renewal hooks
+  copy:
+    src: apache.sh
+    dest: /etc/letsencrypt/renewal-hooks/
+    mode: 0755
+    owner: root
+    group: root
+  become: true
