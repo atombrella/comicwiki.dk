@@ -1,0 +1,2 @@
+[server]
+comicwiki2 ansible_connection=ssh ansible_ssh_host=157.230.111.175 ansible_ssh_user=mads ansible_python_interpreter=/usr/bin/python3

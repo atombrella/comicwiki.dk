@@ -1,12 +1,15 @@
 ---
 - name: Install apache2
-  apt: name=apache2 state=latest update_cache=yes
+  apt: name=apache2 state=present update_cache=yes
+  become: true
 
 - name: Install Apache modules
-  apt: name={{ item }} state=latest update_cache=yes
+  apt: name={{ item }} state=present update_cache=yes
   with_items:
     - modsecurity-crs
     - libapache2-mod-php
+  become: true
+
 
 - name: Install mod_pagespeed
   apt:
@@ -22,6 +25,25 @@
   with_items:
     - /etc/apache2/sites-available
     - /etc/apache2/sites-enabled
+  become: true
+
+- name: Make ports listen on IPv4 and IPv6
+  template:
+    src: ports.conf
+    dest: /etc/apache2/ports.conf
+    mode: 0644
+    owner: www-data
+    group: www-data
+  become: true
+
+- name: Auxiliary security configuration
+  template:
+    src: security.conf
+    dest: /etc/apache2/conf-available/security.conf
+    mode: 0644
+    owner: www-data
+    group: www-data
+  become: true
 
 - name: Copy available sites
   template:
@@ -32,4 +54,5 @@
     mode=0644
   with_items:
     - {src: '000-default.conf.j2', dest: '/etc/apache2/sites-available/000-default.conf'}
-    - {src: 'default-ssl.conf.j2', dest: '/etc/apache2/sites-available/000-default.conf'}
+    - {src: 'default-ssl.conf.j2', dest: '/etc/apache2/sites-available/default-ssl.conf'}
+  become: true

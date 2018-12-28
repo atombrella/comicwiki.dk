@@ -1,4 +1,9 @@
 ---
+- name: Update the repository cache
+  apt:
+    update_cache: true
+  become: true
+
 - name: Install base packages
   apt: name={{ item }} state=present
   with_items:
@@ -10,13 +15,30 @@
     - imagemagick
     - openssh-server
     - rsync
+  become: true
+
+- name: Make sure we have a 'wheel' group
+  group:
+    name: wheel
+    state: present
+  become: true
+
+- name: Allow 'wheel' group to have passwordless sudo
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^%wheel'
+    line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+    validate: 'visudo -cf %s'
+  become: true
 
 - name: Create user for mads
   user:
     name: mads
     shell: /bin/bash
-    groups: users,sudo
+    groups: users,sudo,wheel
     append: true
+  become: true
 
 - name: Add authorized keys
   authorized_key:

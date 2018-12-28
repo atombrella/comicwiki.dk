@@ -11,11 +11,10 @@
     - mysql-server
     - mysql-client
 
-- name: Delete /var/www/html directory
+- name: Delete /var/www/html/index.html file
   file:
-    path: /var/www/html
+    path: /var/www/html/index.html
     state: absent
-  when: initial_installation
 
 - name: Install Mediawiki
   git:
@@ -51,15 +50,6 @@
     owner: www-data
     group: www-data
 
-- name: Install local composer packages
-  copy:
-    src: composer.local.json
-    dest: /var/www/html/composer.local.json
-    owner: www-data
-    group: www-data
-    mode: 0644
-  notify: update composer
-
 - name: Install Mediawiki extensions
   git:
     repo: "{{ item.path }}"
@@ -68,9 +58,8 @@
     depth: 1
     update: false
   with_items:
-    - {path: 'https://gerrit.wikimedia.org/r/p/mediawiki/extensions/ParserFunctions.git', name: 'ParserFunctions'}
-    - {path: 'https://gerrit.wikimedia.org/r/p/mediawiki/extensions/WikiEditor.git', name: 'WikiEditor'}
     - {path: 'https://gerrit.wikimedia.org/r/p/mediawiki/extensions/Cite.git', name: 'Cite'}
+    - {path: 'https://gerrit.wikimedia.org/r/p/mediawiki/extensions/CookieWarning.git', name: 'CookieWarning'}
   when: initial_installation
 
 - name: Create resources directory for comicwiki.dk
@@ -81,7 +70,7 @@
     owner: www-data
     group: www-data
 
-- name: ignore comicwiki.dk resources dir
+- name: Ignore comicwiki.dk resources dir
   lineinfile:
     path: /var/www/html/.git/info/exclude
     line: 'resources/comicwiki.dk/'

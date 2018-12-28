@@ -1,0 +1,8 @@
+---
+- hosts: server
+  roles:
+    - base
+    - apache
+    - mysql
+    - security
+    # - mediawiki

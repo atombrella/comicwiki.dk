@@ -1,3 +1,9 @@
 ---
 - name: netfilter restart
   command: netfilter-persistent restart
+
+- name: unattended-upgrades restart
+  service: name=unattended-upgrades state=restarted
+
+- name: restart ssh
+  service: name=sshd state=restarted
