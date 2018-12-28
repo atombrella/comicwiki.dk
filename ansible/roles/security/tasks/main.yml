@@ -19,18 +19,21 @@
   iptables:
     chain: INPUT
     protocol: tcp
-    destination_port: "{{ item }}"
+    destination_port: "{{ item.port }}"
     ctstate: NEW
     jump: ACCEPT
+    ip_version: "{{ item.version }}"
   with_items:
-    - 22
-    - 80
-    - 443
+    - {port: 22, version: "ipv4"}
+    - {port: 22, version: "ipv6"}
+    - {port: 80, version: "ipv4"}
+    - {port: 80, version: "ipv6"}
+    - {port: 443, version: "ipv4"}
+    - {port: 443, version: "ipv6"}
   become: true
   become_user: root
   notify:
     - netfilter restart
-
 
 - name: Firewall rule - allow all loopback traffic
   iptables:

@@ -1,6 +1,7 @@
 ---
 - name: netfilter restart
   command: netfilter-persistent restart
+  become: true
 
 - name: unattended-upgrades restart
   service: name=unattended-upgrades state=restarted
