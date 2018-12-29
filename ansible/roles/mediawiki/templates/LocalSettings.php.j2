@@ -29,7 +29,7 @@ $wgMetaNamespace = "ComicWiki";
 $wgScriptPath = "";
 
 ## The protocol and server name to use in fully-qualified URLs
-$wgServer = "http://localhost:8080";
+$wgServer = "https://staging.comicwiki.dk";
 
 ## The URL path to static resources (images, scripts, etc.)
 $wgResourceBasePath = $wgScriptPath;
@@ -54,9 +54,9 @@ $wgEmailAuthentication = true;
 ## Database settings
 $wgDBtype = "mysql";
 $wgDBserver = "localhost";
-$wgDBname = {{ db_name }};
-$wgDBuser = {{ db_user }};
-$wgDBpassword = {{ db_password }};
+$wgDBname = "{{ db_name }}";
+$wgDBuser = "{{ db_user }}";
+$wgDBpassword = "{{ db_password }}";
 
 # MySQL specific settings
 $wgDBprefix = "mw_";
@@ -96,14 +96,14 @@ $wgShellLocale = "C.UTF-8";
 $wgLanguageCode = "da";
 $wgLang = "DA";
 
-$wgSecretKey = "40d5b60f759d728be44e372847a066a75542e5513f6f5d3822415fd001d85310";
+$wgSecretKey = "{{ secret_key }}";
 
 # Changing this will log out all existing sessions.
 $wgAuthenticationTokenVersion = "1";
 
 # Site upgrade key. Must be set to a string (default provided) to turn on the
 # web installer while LocalSettings.php is in place
-$wgUpgradeKey = "c0552ae9833e906b";
+$wgUpgradeKey = "{{ upgrade_key }}";
 
 ## For attaching licensing metadata to pages, and displaying an
 ## appropriate copyright notice / icon. GNU Free Documentation

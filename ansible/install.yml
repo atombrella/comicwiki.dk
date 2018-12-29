@@ -4,6 +4,6 @@
     - base
     - apache
     - mysql
+    - mediawiki
     - security
     - letsencrypt
-    # - mediawiki
