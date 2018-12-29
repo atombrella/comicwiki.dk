@@ -10,11 +10,13 @@
     - php7.2-xml
     - mysql-server
     - mysql-client
+  become: true
 
 - name: Delete /var/www/html/index.html file
   file:
     path: /var/www/html/index.html
     state: absent
+  become: true
 
 - name: Install Mediawiki
   git:
@@ -23,15 +25,9 @@
     version: REL1_31
     depth: 1
     update: false
-
-- name: Ensure owner rights for new installation
-  file:
-    path: /var/www/html
-    state: directory
-    owner: www-data
-    group: www-data
-    mode: u=rwX,g=rX,o=rX
-    recurse: true
+  become: true
+  become_user: www-data
+  tags: install
 
 - include_tasks: composer.yml
 
@@ -49,6 +45,7 @@
     mode: 0600
     owner: www-data
     group: www-data
+  become: true
 
 - name: Install Mediawiki extensions
   git:
@@ -61,17 +58,43 @@
     - {path: 'https://gerrit.wikimedia.org/r/p/mediawiki/extensions/Cite.git', name: 'Cite'}
     - {path: 'https://gerrit.wikimedia.org/r/p/mediawiki/extensions/CookieWarning.git', name: 'CookieWarning'}
   when: initial_installation
+  become: true
+  tags: install
 
 - name: Create resources directory for comicwiki.dk
   file:
-    path: /var/www/html/resources/comicwiki.dk/
+    path: /var/www/html/resources/comicwiki.dk/images
     state: directory
     mode: 0755
     owner: www-data
     group: www-data
+    recurse: true
+  become: true
 
 - name: Ignore comicwiki.dk resources dir
   lineinfile:
     path: /var/www/html/.git/info/exclude
     line: 'resources/comicwiki.dk/'
     state: present
+  become: true
+
+- name: Create images
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: 0644
+    group: www-data
+    owner: www-data
+  with_items:
+    - {src: "images/btn_oversigt_inner.png", dest: "/var/www/html/resources/comicwiki.dk/images/btn_oversigt_inner.png"}
+    - {src: "images/btn_oversigt.png", dest: "/var/www/html/resources/comicwiki.dk/images/btn_oversigt.png"}
+    - {src: "images/discussionitem_icon.gif", dest: "/var/www/html/resources/comicwiki.dk/images/discussionitem_icon.gif"}
+    - {src: "images/icon_cleanup.gif", dest: "/var/www/html/resources/comicwiki.dk/images/icon_cleanup.gif"}
+    - {src: "images/icon_disambiguation.gif", dest: "/var/www/html/resources/comicwiki.dk/images/icon_disambiguation.gif"}
+    - {src: "images/icon_disambiguation_micro.gif", dest: "/var/www/html/resources/comicwiki.dk/images/icon_disambiguation_micro.gif"}
+    - {src: "images/icon_disputed.gif", dest: "/var/www/html/resources/comicwiki.dk/images/icon_disputed.gif"}
+    - {src: "images/icon_info.gif", dest: "/var/www/html/resources/comicwiki.dk/images/icon_info.gif"}
+    - {src: "images/icon_merge.gif", dest: "/var/www/html/resources/comicwiki.dk/images/icon_merge.gif"}
+    - {src: "images/icon_stub.gif", dest: "/var/www/html/resources/comicwiki.dk/images/icon_stub.gif"}
+    - {src: "images/logo.png", dest: "/var/www/html/resources/comicwiki.dk/images/logo.png"}
+  become: true
