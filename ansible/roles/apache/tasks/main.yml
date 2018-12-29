@@ -10,7 +10,6 @@
     - libapache2-mod-php
   become: true
 
-
 - name: Install mod_pagespeed
   apt:
     deb: https://dl-ssl.google.com/dl/linux/direct/mod-pagespeed-stable_current_amd64.deb
@@ -55,4 +54,11 @@
   with_items:
     - {src: '000-default.conf.j2', dest: '/etc/apache2/sites-available/000-default.conf'}
     - {src: 'default-ssl.conf.j2', dest: '/etc/apache2/sites-available/default-ssl.conf'}
+  become: true
+
+- name: Enable headers module
+  apache2_module:
+    state: present
+    name: headers
+    identifier: headers
   become: true

@@ -13,6 +13,10 @@
     chain: INPUT
     ctstate: ESTABLISHED,RELATED
     jump: ACCEPT
+    ip_version: "{{ item }}"
+  with_items:
+    - ipv4
+    - ipv6
   become: true
 
 - name: Configure iptables ports
@@ -44,6 +48,23 @@
   become: true
   become_user: root
 
+- name: Disable icmp ping ipv4
+  iptables:
+    chain: INPUT
+    protocol: icmp
+    icmp_type: "echo-request"
+    jump: DROP
+  become: true
+
+- name: Disable icmp ping ipv6
+  iptables:
+    chain: INPUT
+    protocol: ipv6-icmp
+    icmp_type: "echo-request"
+    jump: DROP
+    ip_version: ipv6
+  become: true
+
 - name: Firewall rule - drop any traffic without rule
   iptables:
     chain: INPUT
@@ -74,14 +95,22 @@
 
 - name: Activitate unattended upgrades
   template:
-    src: 20auto-upgrades.j2
-    dest: /etc/apt/apt.conf.d/20auto-upgrades
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
     owner: root
     group: root
     mode: 0644
   become: true
   become_user: root
+  with_items:
+    - {src: "20auto-upgrades.j2", dest: "/etc/apt/apt.conf.d/20auto-upgrades"}
+    - {src: "50unattended-upgrades.j2", dest: "/etc/apt/apt.conf.d/50unattended-upgrades"}
   notify:
     - unattended-upgrades restart
 
-# TODO some kernel (rp filter etc.) settings should be adjusted
+- name: Tweak kernel parameters for security
+  sysctl:
+    name: net.ipv4.ip_forward
+    value: 0
+    sysctl_file: /etc/sysctl.conf
+    reload: true
