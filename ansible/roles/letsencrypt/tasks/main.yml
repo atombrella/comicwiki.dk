@@ -8,6 +8,7 @@
 
 - name: Install certbot
   apt: name=certbot state=present update_cache=true
+  become: true
 
 - name: Make cli.ini file
   copy:
@@ -57,4 +58,13 @@
     mode: 0755
     owner: root
     group: root
+  become: true
+
+- name: Make renewal job
+  copy:
+    src: cert-renew.sh
+    dest: /etc/cron.daily/cert-renew.sh
+    owner: root
+    group: root
+    mode: 0755
   become: true

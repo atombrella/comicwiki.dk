@@ -5,4 +5,5 @@
     - apache
     - mysql
     - security
+    - letsencrypt
     # - mediawiki
