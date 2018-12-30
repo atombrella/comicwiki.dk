@@ -1,5 +1,6 @@
 ---
 - hosts: server
+  gather_facts: true
   roles:
     - base
     - apache
@@ -7,3 +8,4 @@
     - mediawiki
     - security
     - letsencrypt
+    - postfix
