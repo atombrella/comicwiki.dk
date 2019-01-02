@@ -35,6 +35,7 @@
   composer:
     command: install
     working_dir: /var/www/html
+    no_dev: true
   become: true
   become_user: www-data
 
@@ -47,23 +48,9 @@
     group: www-data
   become: true
 
-- name: Install Mediawiki extensions
-  git:
-    repo: "{{ item.path }}"
-    dest: /var/www/html/extensions/{{ item.name }}
-    version: REL1_31
-    depth: 1
-    update: false
-  with_items:
-    - {path: 'https://gerrit.wikimedia.org/r/p/mediawiki/extensions/Cite.git', name: 'Cite'}
-    - {path: 'https://gerrit.wikimedia.org/r/p/mediawiki/extensions/CookieWarning.git', name: 'CookieWarning'}
-  when: initial_installation
-  become: true
-  tags: install
-
 - name: Create resources directory for comicwiki.dk
   file:
-    path: /var/www/html/resources/comicwiki.dk/images
+    path: /var/www/html/resources/comicwiki/images
     state: directory
     mode: 0755
     owner: www-data
@@ -71,11 +58,24 @@
     recurse: true
   become: true
 
-- name: Ignore comicwiki.dk resources dir
+- name: Ignore comicwiki resources dir
   lineinfile:
     path: /var/www/html/.git/info/exclude
-    line: 'resources/comicwiki.dk/'
+    line: 'resources/comicwiki/'
     state: present
+  become: true
+
+- name: Copy necessary resources
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: 0644
+    owner: www-data
+    group: www-data
+  with_items:
+    - {src: "comicwiki.less", dest: "/var/www/html/resources/comicwiki/comicwiki.less"}
+    - {src: "comicwiki-header.xml", dest: "/var/www/html/resources/comicwiki/comicwiki-header.xml"}
+    - {src: "comicwiki.css.map", dest: "/var/www/html/resources/comicwiki/comicwiki.css.map"}
   become: true
 
 - name: Create images
@@ -96,5 +96,8 @@
     - {src: "images/icon_info.gif", dest: "/var/www/html/resources/comicwiki.dk/images/icon_info.gif"}
     - {src: "images/icon_merge.gif", dest: "/var/www/html/resources/comicwiki.dk/images/icon_merge.gif"}
     - {src: "images/icon_stub.gif", dest: "/var/www/html/resources/comicwiki.dk/images/icon_stub.gif"}
-    - {src: "images/logo.png", dest: "/var/www/html/resources/comicwiki.dk/images/logo.png"}
+    - {src: "images/Icon_inducks.gif", dest: "/var/www/html/resources/comicwiki.dk/images/Icon_inducks.gif"}
+    - {src: "images/Icon_Nummer_9_MM.gif", dest: "/var/www/html/resources/comicwiki.dk/images/Icon_Nummer_9_MM.gif"}
+    - {src: "images/Icon_Planet_Pulp.gif", dest: "/var/www/html/resources/comicwiki.dk/images/Icon_Planet_Pulp.gif"}
+    - {src: "images/Icon_ddfr.gif", dest: "/var/www/html/resources/comicwiki.dk/images/Icon_ddfr.gif"}
   become: true

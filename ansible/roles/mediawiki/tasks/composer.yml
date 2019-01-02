@@ -16,7 +16,6 @@
     src: /usr/local/bin/composer.phar
     dest: /usr/local/bin/composer
     archive: true
-  delegate_to: "{{ inventory_hostname }}"
   tags: composer
 
 - name: Make composer executable

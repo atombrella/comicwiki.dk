@@ -15,17 +15,6 @@
  *   $egChameleonLayoutFile= __DIR__ . '/resources/comicwiki/comicwiki-header.xml';
  *
  */
-/**
- * Cookie Notice
- * Dette banner vises i bunden af site, overalt. Det skjules ved at logge ind.
- */
-#localNotice {
-  margin: 0;
-}
-#localNotice p {
-  margin: 0;
-  padding: 5px;
-}
 
 /**
  * Variable
@@ -107,6 +96,31 @@ body.mediawiki #bodyContent::after {
 img {
   max-width: 100%;
   height: auto;
+}
+
+/**
+   Ikoner ved specielle links
+*/
+body.mediawiki a[href^="http://nummer9.dk"].external,
+body.mediawiki a[href^="https://nummer9.dk"].external {
+    background-image: "/resources/comicwiki/images/Icon_Nummer_9_MM.gif";
+}
+
+body.mediawiki a[href^="https://coa.inducks.org"].external,
+body.mediawiki a[href^="https://inducks.org"].external,
+body.mediawiki a[href^="http://coa.inducks.org"].external
+ {
+    background-image: "/resources/comicwiki/images/Icon_inducks.gif";
+}
+
+body.mediawiki a[href^="http://ddfr.dk"].external,
+body.mediawiki a[href^="https://ddfr.dk"].external
+ {
+    background-image: "/resources/comicwiki/images/Icon_ddfr.gif";
+}
+
+body.mediawiki a[href^="http://planetpulp.dk"].external {
+    background-image: "/resources/comicwiki/images/Icon_Planet_Pulp.gif";
 }
 
 /**
