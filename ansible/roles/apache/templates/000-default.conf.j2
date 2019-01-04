@@ -1,7 +1,7 @@
 <VirtualHost *:80>
         <Directory /var/www/html>
                 Options Indexes FollowSymLinks MultiViews
-                AllowOverride All
+                AllowOverride None
                 Order allow,deny
                 allow from all
         </Directory>
@@ -15,7 +15,7 @@
         # However, you must set it for any further virtual host explicitly.
         ServerName comicwiki.dk
 
-        ServerAdmin webmaster@localhost
+        ServerAdmin webmaster@comicwiki.dk
         DocumentRoot /var/www/html
 
         # Available loglevels: trace8, ..., trace1, debug, info, notice, warn,
