@@ -42,15 +42,6 @@
     group: root
   become: true
 
-- name: Copy over configuration
-  template:
-    src: www.comicwiki.dk.conf.j2
-    dest: /etc/letsencrypt/renewal/www.comicwiki.dk.conf
-    mode: 0644
-    owner: root
-    group: root
-  become: true
-
 - name: Make renewal hooks
   copy:
     src: apache.sh
@@ -67,4 +58,16 @@
     owner: root
     group: root
     mode: 0755
+  become: true
+
+- name: Get staging certificate
+  command: certbot certonly -d staging.comicwiki.dk
+  args:
+    creates: /etc/letsencrypt/live/staging.comicwiki.dk
+  become: true
+
+- name: Get www certificate
+  command: certbot certonly -d www.comicwiki.dk -d comicwiki.dk
+  args:
+    creates: /etc/letsencrypt/live/www.comicwiki.dk
   become: true
