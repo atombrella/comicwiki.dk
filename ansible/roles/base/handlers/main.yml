@@ -1,2 +1,4 @@
 ---
-# handlers file for base
+- name: restart networking
+  command: netplan apply
+  become: true

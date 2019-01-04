@@ -4,6 +4,22 @@
     update_cache: true
   become: true
 
+- name: Set hostname
+  hostname:
+    name: "comicwiki.dk"
+  become: true
+
+- name: Copy over hosts file
+  template:
+    src: hosts
+    dest: /etc/hosts
+    mode: 0644
+    group: root
+    owner: root
+  become: true
+  notify:
+    - restart networking
+
 - name: Install base packages
   apt: name={{ item }} state=present
   with_items:
@@ -15,6 +31,21 @@
     - imagemagick
     - openssh-server
     - rsync
+    - ntpdate
+  become: true
+
+- name: Set timezone to Europe/Copenhagen
+  timezone:
+    name: Europe/Copenhagen
+  become: true
+
+- name: Create ntpdate cronjob
+  copy:
+    src: ntpdate.sh
+    dest: /etc/cron.hourly/ntpdate.sh
+    mode: 0755
+    owner: root
+    group: root
   become: true
 
 - name: Make sure we have a 'wheel' group
