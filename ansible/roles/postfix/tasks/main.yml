@@ -4,5 +4,39 @@
   with_items:
     - postfix
     - dovecot-core
+    - mailutils
+  become: true
 
-- name: Do more postfix stuff
+# Configuration is based on
+# https://linux-audit.com/postfix-hardening-guide-for-security-and-privacy/
+
+- name: Create sasl folder
+  file:
+    state: directory
+    path: /etc/postfix/sasl/
+    owner: root
+    group: root
+    mode: 0755
+  become: true
+
+- name: Copy default configuration
+  template:
+    src: sasl_passwd
+    dest: /etc/postfix/sasl/sasl_passwd
+    mode: 0600
+    owner: root
+    group: root
+  become: true
+  notify:
+    - restart postfix
+
+- name: Copy default configuration
+  template:
+    src: main.cf
+    dest: /etc/postfix/main.cf
+    mode: 0644
+    owner: root
+    group: root
+  become: true
+  notify:
+    - restart postfix

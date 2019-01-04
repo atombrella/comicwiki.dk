@@ -1,6 +1,8 @@
 ---
 - name: start postfix
   service: name=postfix state=started
+  become: true
 
-- name: start postfix
+- name: restart postfix
   service: name=postfix state=restarted
+  become: true
