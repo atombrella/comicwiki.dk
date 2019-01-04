@@ -8,6 +8,14 @@
     - unattended-upgrades
   become: true
 
+- name: Remove unneeded tools
+  apt:
+    name: "{{ item }}"
+    state: absent
+  with_items:
+    - telnet
+  become: true
+
 - name: iptables accept related
   iptables:
     chain: INPUT
@@ -110,8 +118,10 @@
 
 - name: Tweak kernel parameters for security
   sysctl:
-    name: net.ipv4.ip_forward
-    value: 0
+    name: "{{ item.parameter }}"
+    value: "{{ item.value }}"
     sysctl_file: /etc/sysctl.conf
     reload: true
+  with_items:
+    - {parameter: "net.ipv4.ip_forward", value: "0"}
   become: true

@@ -4,7 +4,13 @@
   become: true
 
 - name: unattended-upgrades restart
-  service: name=unattended-upgrades state=restarted
+  service:
+    name: unattended-upgrades
+    state: restarted
+  become: true
 
 - name: restart ssh
-  service: name=sshd state=restarted
+  service:
+    name: sshd
+    state: restarted
+  become: true
