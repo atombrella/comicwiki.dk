@@ -5,10 +5,12 @@
     - postfix
     - dovecot-core
     - mailutils
+    - procmail
   become: true
 
 # Configuration is based on
 # https://linux-audit.com/postfix-hardening-guide-for-security-and-privacy/
+# https://help.ubuntu.com/lts/serverguide/postfix.html.en
 
 - name: Create sasl folder
   file:
@@ -28,6 +30,7 @@
     group: root
   become: true
   notify:
+    - postmap sasl_passwd
     - restart postfix
 
 - name: Copy default configuration

@@ -6,3 +6,7 @@
 - name: restart postfix
   service: name=postfix state=restarted
   become: true
+
+- name: postmap sasl_passwd
+  command: postmap /etc/postfix/sasl/sasl_passwd
+  become: true
