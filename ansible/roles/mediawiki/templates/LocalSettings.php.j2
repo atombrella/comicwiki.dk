@@ -18,7 +18,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 ## Uncomment this to disable output compression
 # $wgDisableOutputCompression = true;
 
-$wgSitename = "comicWiki";
+$wgSitename = "ComicWiki";
 $wgMetaNamespace = "ComicWiki";
 
 ## The URL base path to the directory containing the wiki;
@@ -30,8 +30,8 @@ $wgScriptPath = "";
 $wgArticlePath = "/wiki/$1";
 
 ## The protocol and server name to use in fully-qualified URLs
-$wgCanonicalServer = 'https://staging.comicwiki.dk';
-$wgServer = "//staging.comicwiki.dk";
+$wgCanonicalServer = 'https://comicwiki.dk';
+$wgServer = "//comicwiki.dk";
 
 ## The URL path to static resources (images, scripts, etc.)
 $wgResourceBasePath = $wgScriptPath;
@@ -45,6 +45,7 @@ $wgLogo = "$wgResourceBasePath/resources/assets/logo.png";
 
 $wgEnableEmail = true;
 $wgEnableUserEmail = true;
+$wgEmailConfirmToEdit = true;
 
 $wgEmergencyContact = "ingen-svar@comicwiki.dk";
 $wgPasswordSender = "ingen-svar@comicwiki.dk";
@@ -77,6 +78,9 @@ $wgDBTableOptions = "ENGINE=InnoDB";
 
 ## Shared memory settings
 $wgMainCacheType = CACHE_NONE;
+
+# NewPP limit report should not be in the output!
+$wgEnableParserLimitReporting = false;
 
 ## To enable image uploads, make sure the 'images' directory
 ## is writable, then set this to true:
@@ -130,6 +134,9 @@ $wgRightsPage = "Comicwiki:Copyright";
 $wgRightsUrl = "https://creativecommons.org/licenses/by-sa/4.0/";
 $wgRightsText = "Creative Commons Attribution-ShareAlike";
 $wgRightsIcon = "$wgResourceBasePath/resources/assets/licenses/cc-by-sa.png";
+
+# Different auxiliary settings
+$wgEnableMagicLinks['ISBN'] = true;
 
 # Path to the GNU diff3 utility. Used for conflict resolution.
 $wgDiff3 = "/usr/bin/diff3";

@@ -11,13 +11,6 @@
     creates: /usr/local/bin/composer
   tags: composer
 
-- name: Rename composer.phar to composer
-  synchronize:
-    src: /usr/local/bin/composer.phar
-    dest: /usr/local/bin/composer
-    archive: true
-  tags: composer
-
 - name: Make composer executable
   file:
     path: /usr/local/bin/composer

@@ -63,6 +63,15 @@
     state: present
   become: true
 
+- name: Make favicon
+  copy:
+    src: favicon.ico
+    dest: /var/www/html/favicon.ico
+    mode: 0644
+    group: www-data
+    owner: www-data
+  become: true
+
 - name: Copy necessary resources
   copy:
     src: "{{ item.src }}"
@@ -84,18 +93,18 @@
     group: www-data
     owner: www-data
   with_items:
-    - {src: "images/btn_oversigt_inner.png", dest: "/var/www/html/resources/comicwiki.dk/images/btn_oversigt_inner.png"}
-    - {src: "images/btn_oversigt.png", dest: "/var/www/html/resources/comicwiki.dk/images/btn_oversigt.png"}
-    - {src: "images/discussionitem_icon.gif", dest: "/var/www/html/resources/comicwiki.dk/images/discussionitem_icon.gif"}
-    - {src: "images/icon_cleanup.gif", dest: "/var/www/html/resources/comicwiki.dk/images/icon_cleanup.gif"}
-    - {src: "images/icon_disambiguation.gif", dest: "/var/www/html/resources/comicwiki.dk/images/icon_disambiguation.gif"}
-    - {src: "images/icon_disambiguation_micro.gif", dest: "/var/www/html/resources/comicwiki.dk/images/icon_disambiguation_micro.gif"}
-    - {src: "images/icon_disputed.gif", dest: "/var/www/html/resources/comicwiki.dk/images/icon_disputed.gif"}
-    - {src: "images/icon_info.gif", dest: "/var/www/html/resources/comicwiki.dk/images/icon_info.gif"}
-    - {src: "images/icon_merge.gif", dest: "/var/www/html/resources/comicwiki.dk/images/icon_merge.gif"}
-    - {src: "images/icon_stub.gif", dest: "/var/www/html/resources/comicwiki.dk/images/icon_stub.gif"}
-    - {src: "images/Icon_inducks.gif", dest: "/var/www/html/resources/comicwiki.dk/images/Icon_inducks.gif"}
-    - {src: "images/Icon_Nummer_9_MM.gif", dest: "/var/www/html/resources/comicwiki.dk/images/Icon_Nummer_9_MM.gif"}
-    - {src: "images/Icon_Planet_Pulp.gif", dest: "/var/www/html/resources/comicwiki.dk/images/Icon_Planet_Pulp.gif"}
-    - {src: "images/Icon_ddfr.gif", dest: "/var/www/html/resources/comicwiki.dk/images/Icon_ddfr.gif"}
+    - {src: "images/btn_oversigt_inner.png", dest: "/var/www/html/resources/comicwiki/images/btn_oversigt_inner.png"}
+    - {src: "images/btn_oversigt.png", dest: "/var/www/html/resources/comicwiki/images/btn_oversigt.png"}
+    - {src: "images/discussionitem_icon.gif", dest: "/var/www/html/resources/comicwiki/images/discussionitem_icon.gif"}
+    - {src: "images/icon_cleanup.gif", dest: "/var/www/html/resources/comicwiki/images/icon_cleanup.gif"}
+    - {src: "images/icon_disambiguation.gif", dest: "/var/www/html/resources/comicwiki/images/icon_disambiguation.gif"}
+    - {src: "images/icon_disambiguation_micro.gif", dest: "/var/www/html/resources/comicwiki/images/icon_disambiguation_micro.gif"}
+    - {src: "images/icon_disputed.gif", dest: "/var/www/html/resources/comicwiki/images/icon_disputed.gif"}
+    - {src: "images/icon_info.gif", dest: "/var/www/html/resources/comicwiki/images/icon_info.gif"}
+    - {src: "images/icon_merge.gif", dest: "/var/www/html/resources/comicwiki/images/icon_merge.gif"}
+    - {src: "images/icon_stub.gif", dest: "/var/www/html/resources/comicwiki/images/icon_stub.gif"}
+    - {src: "images/Icon_inducks.gif", dest: "/var/www/html/resources/comicwiki/images/Icon_inducks.gif"}
+    - {src: "images/Icon_Nummer_9_MM.gif", dest: "/var/www/html/resources/comicwiki/images/Icon_Nummer_9_MM.gif"}
+    - {src: "images/Icon_Planet_Pulp.gif", dest: "/var/www/html/resources/comicwiki/images/Icon_Planet_Pulp.gif"}
+    - {src: "images/Icon_ddfr.gif", dest: "/var/www/html/resources/comicwiki/images/Icon_ddfr.gif"}
   become: true

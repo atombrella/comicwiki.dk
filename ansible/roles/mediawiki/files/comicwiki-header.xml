@@ -61,12 +61,6 @@ with this program. If not, see <http://www.gnu.org/licenses/>.
 
     <row>
       <cell span="12">
-	<component type="SiteNotice"/>
-      </cell>
-    </row>
-
-    <row>
-      <cell span="12">
 	<component type="MainContent" class="mw-body container-fluid"/>
       </cell>
     </row>
