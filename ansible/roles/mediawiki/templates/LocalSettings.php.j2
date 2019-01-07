@@ -54,9 +54,6 @@ $wgSMTP = array(
     'host'     => "localhost",        // could also be an IP address. Where the SMTP server is located
     'IDHost'   => "comicwiki.dk",     // Generally this will be the domain name of your website (aka mywiki.org)
     'port'     => 25,                 // Port to use when connecting to the SMTP server
-    'auth'     => true,               // Should we use SMTP authentication (true or false)
-    'username' => "{{ sasl_username }}",     // Username to use for SMTP authentication (if being used)
-    'password' => "{{ sasl_username }}"       // Password to use for SMTP authentication (if being used)
 );
 
 $wgEnotifUserTalk = true;
@@ -152,6 +149,11 @@ $egChameleonLayoutFile= __DIR__ . '/resources/comicwiki/comicwiki-header.xml';
 $egChameleonExternalStyleModules = array(
     __DIR__ . '/resources/comicwiki/comicwiki.less' => $wgScriptPath
 );
+
+// $egChameleonExternalLessVariables = array(
+//     'brand-primary' => '',
+//     '' => 'rgba(255,255,255,1)',
+// )
 
 # End of automatically generated settings.
 # Add more configuration options below.

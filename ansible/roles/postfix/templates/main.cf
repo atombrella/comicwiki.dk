@@ -22,24 +22,24 @@ readme_directory = no
 compatibility_level = 2
 
 # TLS parameters
-smtpd_tls_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem
-smtpd_tls_key_file=/etc/ssl/private/ssl-cert-snakeoil.key
-smtpd_use_tls=yes
-smtpd_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
-smtpd_tls_CApath = /etc/ssl/certs/
-smtpd_tls_session_cache_database = btree:${data_directory}/smtpd_scache
-smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
+# smtpd_tls_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem
+# smtpd_tls_key_file=/etc/ssl/private/ssl-cert-snakeoil.key
+# smtpd_use_tls=yes
+# smtpd_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
+# smtpd_tls_CApath = /etc/ssl/certs/
+# smtpd_tls_session_cache_database = btree:${data_directory}/smtpd_scache
+# smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
 
 # Enable SASL authentication
-smtp_sasl_auth_enable = yes
+# smtp_sasl_auth_enable = yes
 # Disallow any methods that do allow anonymous authentication
-smtp_sasl_security_options = noanonymous
+# smtp_sasl_security_options = noanonymous
 # Define the sasl_passwd file location
-smtp_sasl_password_maps = hash:/etc/postfix/sasl/sasl_passwd
-smtp_sasl_password_maps = hash:/etc/postfix/sasl/sasl_passwd
-smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
-smtp_tls_CApath = /etc/ssl/certs/
-smtp_tls_protocols = !SSLv2,!SSLv3
+# smtp_sasl_password_maps = hash:/etc/postfix/sasl/sasl_passwd
+# smtp_sasl_password_maps = hash:/etc/postfix/sasl/sasl_passwd
+# smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
+# smtp_tls_CApath = /etc/ssl/certs/
+# smtp_tls_protocols = !SSLv2,!SSLv3
 
 # See /usr/share/doc/postfix/TLS_README.gz in the postfix-doc package for
 # information on enabling SSL in the smtp client.
