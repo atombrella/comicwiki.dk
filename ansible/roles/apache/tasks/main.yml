@@ -81,3 +81,25 @@
     - pagespeed
     - security2
   become: true
+
+- name: Create modsecurity configuration
+  template:
+    src: modsecurity.conf.j2
+    dest: /etc/modsecurity/modsecurity.conf
+    mode: 0644
+    group: root
+    owner: root
+  become: true
+  notify:
+    - restart apache
+
+- name: Create Apache configuration
+  template:
+    src: apache2.conf.j2
+    dest: /etc/apache2/apache2.conf
+    mode: 0644
+    group: www-data
+    owner: www-data
+  become: true
+  notify:
+    - restart apache
