@@ -1,11 +1,11 @@
 ---
 - hosts: server
-  gather_facts: true
+  gather_facts: false
   roles:
     - base
+    - letsencrypt
     - apache
     - mysql
     - mediawiki
     - security
-    - letsencrypt
     - postfix
