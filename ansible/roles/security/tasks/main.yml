@@ -26,6 +26,8 @@
     - ipv4
     - ipv6
   become: true
+  notify:
+    - iptables save
 
 - name: Configure iptables ports
   iptables:
@@ -45,7 +47,7 @@
   become: true
   become_user: root
   notify:
-    - netfilter restart
+    - iptables save
 
 - name: Firewall rule - allow all loopback traffic
   iptables:
@@ -55,6 +57,8 @@
     jump: ACCEPT
   become: true
   become_user: root
+  notify:
+    - iptables save
 
 - name: Disable icmp ping ipv4
   iptables:
@@ -63,6 +67,8 @@
     icmp_type: "echo-request"
     jump: DROP
   become: true
+  notify:
+    - iptables save
 
 - name: Disable icmp ping ipv6
   iptables:
@@ -72,6 +78,8 @@
     jump: DROP
     ip_version: ipv6
   become: true
+  notify:
+    - iptables save
 
 - name: Firewall rule - drop any traffic without rule
   iptables:
@@ -79,6 +87,8 @@
     jump: DROP
   become: true
   become_user: root
+  notify:
+    - iptables save
 
 - name: SSH server settings
   template:

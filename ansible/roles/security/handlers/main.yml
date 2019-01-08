@@ -1,6 +1,16 @@
 ---
-- name: netfilter restart
-  command: netfilter-persistent restart
+- name: iptables save
+  command: iptables-save > /etc/iptables/rules.v4
+  register: result
+  notify:
+    - ip6tables save
+  become: true
+
+- name: ip6tables save
+  command: ip6tables-save > /etc/iptables/rules.v6
+  when: result
+  notify:
+    - ip6tables save
   become: true
 
 - name: unattended-upgrades restart
