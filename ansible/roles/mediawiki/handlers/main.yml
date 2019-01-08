@@ -3,3 +3,10 @@
   composer:
     command: update
     working_dir: /var/www/html
+  become: true
+
+- name: reset pagespeed
+  file:
+    path: /var/cache/mod_pagespeed/cache.flush
+    state: touched
+  become: true

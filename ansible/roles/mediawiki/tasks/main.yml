@@ -37,6 +37,22 @@
   become: true
   become_user: www-data
 
+- name: Copy necessary resources
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: 0644
+    owner: www-data
+    group: www-data
+  with_items:
+    - {src: "comicwiki.less", dest: "/var/www/html/resources/comicwiki/comicwiki.less"}
+    - {src: "comicwiki-header.xml", dest: "/var/www/html/resources/comicwiki/comicwiki-header.xml"}
+    - {src: "comicwiki.css.map", dest: "/var/www/html/resources/comicwiki/comicwiki.css.map"}
+    - {src: "comicwiki.js", dest: "/var/www/html/resources/comicwiki/comicwiki.js"}
+  become: true
+  notify:
+    - reset pagespeed
+
 - name: Copy over the local settings file
   template:
     src: LocalSettings.php.j2
@@ -70,19 +86,6 @@
     mode: 0644
     group: www-data
     owner: www-data
-  become: true
-
-- name: Copy necessary resources
-  copy:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
-    mode: 0644
-    owner: www-data
-    group: www-data
-  with_items:
-    - {src: "comicwiki.less", dest: "/var/www/html/resources/comicwiki/comicwiki.less"}
-    - {src: "comicwiki-header.xml", dest: "/var/www/html/resources/comicwiki/comicwiki-header.xml"}
-    - {src: "comicwiki.css.map", dest: "/var/www/html/resources/comicwiki/comicwiki.css.map"}
   become: true
 
 - name: Create images
