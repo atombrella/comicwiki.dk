@@ -11,5 +11,5 @@ end_of_line = lf
 charset = utf-8
 
 # Use 2 spaces for the HTML files
-[*.{html,js,css,yaml,yml}]
+[*.{html,js,css,yaml,yml,less}]
 indent_size = 2
