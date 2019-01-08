@@ -7,7 +7,13 @@
   become: true
 
 - name: Install certbot
-  apt: name=certbot state=present update_cache=true
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: true
+  with_items:
+    - certbot
+    - python-certbot-apache
   become: true
 
 - name: Make cli.ini file
@@ -58,12 +64,6 @@
     owner: root
     group: root
     mode: 0755
-  become: true
-
-- name: Get staging certificate
-  command: certbot certonly -d staging.comicwiki.dk
-  args:
-    creates: /etc/letsencrypt/live/staging.comicwiki.dk
   become: true
 
 - name: Get www certificate
