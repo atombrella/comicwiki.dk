@@ -150,16 +150,6 @@ $egChameleonExternalStyleModules = array(
     __DIR__ . '/resources/comicwiki/comicwiki.less' => $wgScriptPath
 );
 
-// $wgResourceModules['comicwiki.customizations'] = array(
-// 	'scripts' => "/resources/comicwiki/comicwiki.js",
-// );
-//
-// function efCustomBeforePageDisplay( &$out, &$skin ) {
-// 	$out->addModules( array( 'comicwiki.customizations' ) );
-// }
-//
-// $wgHooks['BeforePageDisplay'][] = 'efCustomBeforePageDisplay';
-
 // $egChameleonExternalLessVariables = array(
 //     'brand-primary' => '',
 //     '' => 'rgba(255,255,255,1)',
@@ -171,10 +161,11 @@ $egChameleonExternalStyleModules = array(
 wfLoadExtension( 'ParserFunctions' );
 wfLoadExtension( 'ImageMap' );
 wfLoadExtension( 'Cite' );
-wfLoadExtension( 'ConfirmEdit' );
+wfLoadExtensions([ 'ConfirmEdit', 'ConfirmEdit/QuestyCaptcha' ]);
 wfLoadExtension( 'InputBox' );
 wfLoadExtension( 'CookieWarning' );
 wfLoadExtension( 'WikiEditor' );
+wfLoadExtension( 'SpamBlacklist' );
 
 $wgCookieWarningEnabled = true;
 

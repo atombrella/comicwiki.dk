@@ -8,5 +8,5 @@
 - name: reset pagespeed
   file:
     path: /var/cache/mod_pagespeed/cache.flush
-    state: touched
+    state: touch
   become: true

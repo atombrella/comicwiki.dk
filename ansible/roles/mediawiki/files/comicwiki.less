@@ -366,6 +366,7 @@ body.mediawiki a[href^="http://planetpulp.dk"].external
   margin: 0;
   padding: 15px 20px 10px 20px;
   border-bottom: 1px solid #aaa;
+  word-wrap: break-word;
 }
 
 body.mw-special-Recentchanges #firstHeading {
@@ -1112,18 +1113,11 @@ div.oversigt .NavContent .NavToggle {
   border-top: 4px solid #898279;
   padding: 3px 20px;
 }
-.portaler ul {
-  list-style: none;
-  width: 700px;
+
+.portaler h2 {
+  margin-top: -10px;
 }
-.portaler ul li {
-  display: block;
-  width: 180px;
-  margin-right: 10px;
-  float: left;
-  padding-left: 10px !important;
-  border-left: 1px dotted #898279;
-}
+
 .portaler h2 {
   color: #898279;
   font-size: 100%;
@@ -1199,24 +1193,9 @@ div.oversigt .NavContent .NavToggle {
   bottom: 0;
 }
 
-.portal_tekst {
-  margin-left: 220px;
-}
-
-.portal_destination {
-  font-size: 80%;
-  position: absolute;
-  right: 5px;
-  bottom: 0px;
-}
-
 /**
  * Diverse
  */
-.gallerybox * {
-  text-align: center;
-}
-
 #mw-content-text li.gallerybox div.thumb {
   text-align: center;
   border: none;
@@ -1229,6 +1208,10 @@ div.oversigt .NavContent .NavToggle {
   font-weight: normal;
   font-style: italic;
   color: #000;
+}
+
+span.mw-headline {
+  word-wrap: break-word;
 }
 
 .venner {
@@ -1348,9 +1331,6 @@ table {
   color: #000308;
   background-color: white;
   /* Formater */
-}
-table th {
-  font-weight: bold;
 }
 table td,
 table th {
