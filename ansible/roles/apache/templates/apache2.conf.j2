@@ -105,11 +105,11 @@ KeepAlive On
 MaxKeepAliveRequests 100
 
 <IfModule mpm_prefork_module>
-       StartServers          4
-       MinSpareServers       20
-       MaxSpareServers      40
-       MaxClients           200
-       MaxRequestsPerChild  4500
+       StartServers         2
+       MinSpareServers      10
+       MaxSpareServers      20
+       MaxClients           100
+       MaxRequestsPerChild  2000
 </IfModule>
 
 #

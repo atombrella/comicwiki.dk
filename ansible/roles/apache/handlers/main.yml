@@ -10,3 +10,9 @@
     name: apache2
     state: stopped
   become: true
+
+- name: reload apache
+  service:
+    name: apache2
+    state: reloaded
+  become: true

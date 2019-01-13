@@ -27,6 +27,18 @@
     - /etc/apache2/sites-enabled
   become: true
 
+- name: Enable apache module
+  apache2_module:
+    state: present
+    name: "{{ item }}"
+  with_items:
+    - headers
+    - rewrite
+    - expires
+    - ssl
+    - pagespeed
+  become: true
+
 - name: Make ports listen on IPv4 and IPv6
   template:
     src: ports.conf
@@ -68,19 +80,8 @@
     - {src: '/etc/apache2/sites-available/000-default.conf', dest: '/etc/apache2/sites-enabled/000-default.conf'}
     - {src: '/etc/apache2/sites-available/default-ssl.conf', dest: '/etc/apache2/sites-enabled/default-ssl.conf'}
   become: true
-
-- name: Enable apache module
-  apache2_module:
-    state: present
-    name: "{{ item }}"
-  with_items:
-    - headers
-    - rewrite
-    - expires
-    - ssl
-    - pagespeed
-    - security2
-  become: true
+  notify:
+    - reload apache
 
 - name: Create modsecurity configuration
   template:
