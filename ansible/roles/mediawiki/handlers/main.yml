@@ -10,3 +10,9 @@
     path: /var/cache/mod_pagespeed/cache.flush
     state: touch
   become: true
+
+- name: reset chameleon
+  file:
+    path: /var/www/html/LocalSettings.php
+    state: touch
+  become: true

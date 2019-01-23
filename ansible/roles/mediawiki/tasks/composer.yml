@@ -3,8 +3,6 @@
   get_url:
     url: https://getcomposer.org/installer
     dest: /tmp/installer
-  args:
-    creates: /usr/local/bin/composer
   tags: composer
 
 - name: Install composer
