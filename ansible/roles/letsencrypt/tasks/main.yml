@@ -71,3 +71,10 @@
   args:
     creates: /etc/letsencrypt/live/www.comicwiki.dk
   become: true
+
+- name: Adjust renewal interval for certificate
+  lineinfile:
+    path: /etc/letsencrypt/renewal/www.comicwiki.dk.conf
+    regexp: '^renew_before_expiry'
+    line: 'renew_before_expiry = 7 days'
+  become: true

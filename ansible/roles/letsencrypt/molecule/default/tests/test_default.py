@@ -12,23 +12,12 @@ def test_renewal_job_exists(host):
     assert job.exists
     assert job.user == 'root'
     assert job.group == 'root'
-    assert job.mode == '0755'
+    assert job.mode == 755
 
 
-def test_certbot_installed(host):
+def test_certificate_requested(host):
     package = host.package('certbot')
     assert package.is_installed
-
-
-def test_certbot_configuration(host):
-    configuration = host.file('/etc/letsencrypt/renewal/www.comicwiki.dk.conf')
-
-    assert configuration.exists
-    assert configuration.user == 'root'
-    assert configuration.group == 'root'
-    assert configuration.mode == '0644'
-
-    assert configuration.readlines().contains('')
 
 
 def test_certbot_configuration(host):
@@ -37,6 +26,6 @@ def test_certbot_configuration(host):
     assert cli.exists
     assert cli.user == 'root'
     assert cli.group == 'root'
-    assert cli.mode == '0644'
+    assert cli.mode == 644
 
     assert cli.readlines().contains('max-log-backups = 50')
