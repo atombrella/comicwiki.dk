@@ -63,15 +63,25 @@
     validate: 'visudo -cf %s'
   become: true
 
-- name: Create user for mads
+- name: Create local users
   user:
-    name: mads
+    name: "{{ item }}"
     shell: /bin/bash
     groups: users,sudo,wheel
     append: true
+  with_items:
+    - joen
+    - mads
   become: true
 
-- name: Add authorized keys
+- name: Add authorized keys for Mads
   authorized_key:
     user: mads
     key: "{{ lookup('file', 'files/mads.key.pub') }}"
+
+- name: Add authorized keys for Joen
+  authorized_key:
+    user: joen
+    key: "{{ lookup('file', 'files/joen.key.pub') }}"
+  become: true
+  become_user: joen
