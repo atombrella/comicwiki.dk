@@ -49,7 +49,6 @@
     - {src: "comicwiki-header.xml", dest: "/var/www/html/resources/comicwiki/comicwiki-header.xml"}
     - {src: "comicwiki.css.map", dest: "/var/www/html/resources/comicwiki/comicwiki.css.map"}
     - {src: "comicwiki.js", dest: "/var/www/html/resources/comicwiki/comicwiki.js"}
-    - {src: "logo.png", dest: "/var/www/html/resources/assets/logo.png"}
   become: true
   notify:
     - reset chameleon
@@ -111,4 +110,5 @@
     - {src: "images/Icon_Nummer_9_MM.gif", dest: "/var/www/html/resources/comicwiki/images/Icon_Nummer_9_MM.gif"}
     - {src: "images/Icon_Planet_Pulp.gif", dest: "/var/www/html/resources/comicwiki/images/Icon_Planet_Pulp.gif"}
     - {src: "images/Icon_ddfr.gif", dest: "/var/www/html/resources/comicwiki/images/Icon_ddfr.gif"}
+    - {src: "images/logo.png", dest: "/var/www/html/resources/assets/logo.png"}
   become: true
