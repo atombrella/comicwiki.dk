@@ -32,3 +32,18 @@
   become: true
   notify:
     - Restart mysql
+
+- name: Make MySQL restart check
+  template:
+    src: mysqlcheck.sh
+    dest: /usr/local/bin/mysqlcheck.sh
+    mode: 0755
+    owner: root
+    group: root
+  become: true
+
+- name: Restart MySQL if needed
+  cron:
+    minute: "*/5"
+    job: "/usr/local/bin/mysqlcheck.sh"
+  become: true
