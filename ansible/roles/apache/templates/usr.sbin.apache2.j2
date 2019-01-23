@@ -1,0 +1,29 @@
+#include <tunables/global>
+
+# vim:syntax=apparmor
+
+/usr/sbin/apache2 {
+  #include <abstractions/base>
+  #include <abstractions/lxc/container-base>
+  #include <abstractions/php>
+  #include <abstractions/apache2-common>
+  #include <abstractions/ssl_certs>
+  #include <abstractions/ssl_keys>
+  #include <abstractions/mysql>
+  #include <abstractions/web_data>
+
+  /lib/x86_64-linux-gnu/ld-*.so mr,
+  /usr/sbin/apache2 mr,
+
+  /var/cache/mod_pagespeed/** rw,
+  /var/cache/apache2/** rw,
+  /var/lib/mysql/comicwiki rw,
+  /etc/letsencrypt/live/** r,
+
+  ^DEFAULT_URI flags=(complain) {
+  }
+
+  ^HANDLING_UNTRUSTED_INPUT flags=(complain) {
+  }
+
+}

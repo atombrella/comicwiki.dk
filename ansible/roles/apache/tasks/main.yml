@@ -104,3 +104,23 @@
   become: true
   notify:
     - restart apache
+
+- name: Copy over logrotate configuration
+  template:
+    src: logrotate.j2
+    dest: /etc/logrotate.d/apache2
+    mode: 0644
+    group: root
+    owner: root
+  become: true
+
+- name: Create PHP configuration for Apache
+  template:
+    src: php.ini
+    dest: /etc/php/7.2/apache2/php.ini
+    mode: 0644
+    group: root
+    owner: root
+  become: true
+  notify:
+    - restart apache
