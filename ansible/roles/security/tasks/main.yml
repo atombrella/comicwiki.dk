@@ -6,6 +6,8 @@
     - iptables-persistent
     - fail2ban
     - unattended-upgrades
+    - auditd
+    - apparmor
   become: true
 
 - name: Remove unneeded tools
