@@ -1,27 +1,5 @@
 @charset "UTF-8";
-/**
- * ComicWikis eget skin!
- *
- * Bemærk, denne fil er genereret via SCSS. Rediger den fil, og compile med f.eks. "Koala".
- * Rediger venligst kun denne side hvis du ved hvad du laver.
- * CSS inkluderet her vil være aktivt for alle brugere.
- *
- * Struktur:
- * - Samtlige filer til ComicWikis skin ligger i /resources/comicwiki
- * - CSS fil i ovenstående mappe bliver inkluderet via /MediaWiki:Common.css med in @import
- *   Dette aspekt skal måske ændres, da disse filer ikke bliver loadet på indstillings siderne, samt login siderne.
- * - JavaScript fra comicwiki.js skal kopieres over i /MediaWiki:Common.js
- * - Bemærk, skin benytter en særlig menu-XML som skal loades ind i Chameleon skin vha. et flag i LocalSettings.php:
- *   $egChameleonLayoutFile= __DIR__ . '/resources/comicwiki/comicwiki-header.xml';
- *
- */
 
-/**
- * Variable
- */
-/**
- * CSS Reset
- */
 html, body {
   margin: 0;
   padding: 0;
@@ -231,29 +209,6 @@ body.mediawiki a[href^="http://planetpulp.dk"].external
   font-weight: bold;
   border-right: 1px dotted #4867a5;
   padding-right: 10px;
-}
-
-#p-personal #pt-mycontris {
-  border-right: 1px dotted #4867a5;
-  padding-right: 10px;
-}
-
-#p-personal ul {
-  display: inline;
-  margin: 0;
-}
-
-#p-personal ul li {
-  display: inline;
-  margin-right: 10px;
-}
-
-#p-personal .active {
-  font-weight: bold;
-}
-
-#p-personal ul li#pt-logout {
-  margin: 0;
 }
 
 /**
@@ -714,9 +669,6 @@ body.ns-6 #firstHeading {
 .aib-isbn {
   margin-left: 0;
 }
-.aib-isbn .mw-magiclink-isbn {
-  padding-left: 40px;
-}
 .aib-contents li,
 .aib-isbn p {
   padding: 3px 5px;
@@ -869,6 +821,13 @@ div.oversigt .NavToggle {
 }
 div.oversigt .NavContent .NavToggle {
   background: url("/resources/comicwiki/btn_oversigt_inner.png") no-repeat right center !important;
+}
+div.NavContent a.selflink {
+  color: inherit;
+  font-weight: bold;
+}
+div.NavContent a.selflink:hover {
+  text-decoration: none;
 }
 
 /**
@@ -1194,8 +1153,6 @@ div.thumb {
   object-fit: contain;
 }
 div.gallerytext p {
-  display: inline-flex;
-  word-wrap: break-word;
   text-align: center;
 }
 #siteSub {
