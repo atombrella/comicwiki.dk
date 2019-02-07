@@ -1,0 +1,18 @@
+User-agent: *
+Disallow: /index.php?diff=
+Disallow: /index.php?oldid=
+Disallow: /index.php?title=Help
+Disallow: /index.php?title=Image
+Disallow: /index.php?title=Fil
+Disallow: /index.php?title=Billede
+Disallow: /index.php?title=MediaWiki
+Disallow: /index.php?title=Special:
+Disallow: /index.php?title=Template:
+Disallow: /index.php?title=Skabelon:
+Disallow: /skins/
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /

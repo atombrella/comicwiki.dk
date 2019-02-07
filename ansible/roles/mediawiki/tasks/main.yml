@@ -88,6 +88,22 @@
     owner: www-data
   become: true
 
+- name: Copy over robots.txt
+  copy:
+    src: robots.txt
+    dest: /var/www/html/robots.txt
+    mode: 0644
+    group: www-data
+    owner: www-data
+  become: true
+
+- name: Ignore robots.txt file
+  lineinfile:
+    path: /var/www/html/.git/info/exclude
+    line: 'robots.txt'
+    state: present
+  become: true
+
 - name: Create images
   copy:
     src: "{{ item.src }}"
