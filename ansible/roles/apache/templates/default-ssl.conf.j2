@@ -3,7 +3,9 @@
     ServerName www.comicwiki.dk
     ServerAlias www.comicwiki.dk
 
+    {% filter indent(width=4) %}
     {% include 'ssl_certs.j2' %}
+    {% endfilter %}
 
     ErrorLog ${APACHE_LOG_DIR}/error.log
     CustomLog ${APACHE_LOG_DIR}/access.log combined
@@ -32,9 +34,13 @@
 
     Options -FollowSymLinks -SymLinksIfOwnerMatch
 
-    <filesMatch ".(ico|pdf|flv|jpg|jpeg|png|gif|js|css|swf)$">
-        Header set Cache-Control "max-age=2678400, public"
-    </filesMatch>
+    <IfModule mod_expires.c>
+        <filesMatch ".(woff2|ico|pdf|flv|jpg|jpeg|png|gif|js|css|swf)$">
+            Header set Cache-Control "max-age=2678400, public"
+            ExpiresActive On
+            ExpiresDefault "access plus 1 week"
+        </filesMatch>
+    </IfModule>
 
     <Directory "/var/www/html">
         Options FollowSymLinks MultiViews
@@ -51,6 +57,10 @@
         RewriteRule ^wiki$ index.php [L,QSA]
 	</Directory>
 
+    <Directory "/var/www/html/images">
+        php_flag engine off
+    </Directory>
+
     # Available loglevels: trace8, ..., trace1, debug, info, notice, warn,
     # error, crit, alert, emerg.
     # It is also possible to configure the loglevel for particular
@@ -60,7 +70,9 @@
     ErrorLog ${APACHE_LOG_DIR}/error.log
     CustomLog ${APACHE_LOG_DIR}/access.log combined
 
+    {% filter indent(width=4) %}
     {% include 'ssl_certs.j2' %}
+    {% endfilter %}
 
     SSLCipherSuite      ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256
     SSLHonorCipherOrder on
