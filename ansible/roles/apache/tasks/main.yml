@@ -8,6 +8,7 @@
   with_items:
     - modsecurity-crs
     - libapache2-mod-php
+    - libapache2-mod-apparmor
   become: true
 
 - name: Install mod_pagespeed
@@ -53,6 +54,15 @@
     src: security.conf
     dest: /etc/apache2/conf-available/security.conf
     mode: 0644
+    owner: www-data
+    group: www-data
+  become: true
+
+- name: Enable security configuration
+  file:
+    state: link
+    src: /etc/apache2/conf-available/security.conf
+    path: /etc/apache2/conf-enabled/security.conf
     owner: www-data
     group: www-data
   become: true
