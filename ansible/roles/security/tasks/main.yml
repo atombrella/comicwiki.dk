@@ -128,6 +128,9 @@
   notify:
     - unattended-upgrades restart
 
+# most of them were added from
+# - https://www.cyberciti.biz/faq/linux-kernel-etcsysctl-conf-security-hardening/
+# - https://blog.confirm.ch/sysctl-tuning-linux/
 - name: Tweak kernel parameters for security
   sysctl:
     name: "{{ item.parameter }}"
@@ -136,4 +139,19 @@
     reload: true
   with_items:
     - {parameter: "net.ipv4.ip_forward", value: "0"}
+    - {parameter: "net.ipv4.icmp_echo_ignore_broadcasts", value: "1"}
+    - {parameter: "net.ipv4.conf.all.rp_filter", value: "1"}
+    - {parameter: "net.ipv4.conf.default.rp_filter", value: "1"}
+    - {parameter: "net.ipv4.conf.lo.rp_filter", value: "1"}
+    - {parameter: "net.ipv4.conf.eth0.rp_filter", value: "1"}
+    - {parameter: "net.ipv6.conf.all.forwarding", value: "1"}
+    - {parameter: "net.ipv4.conf.all.log_martians", value: "1"}
+    - {parameter: "net.ipv4.conf.default.accept_source_route", value: "0"}
+    - {parameter: "net.ipv4.conf.default.accept_redirects", value: "0"}
+    - {parameter: "net.ipv4.conf.default.secure_redirects", value: "0"}
+    - {parameter: "net.ipv4.conf.all.send_redirects", value: "0"}
+    - {parameter: "net.ipv4.conf.default.send_redirects", value: "0"}
+    - {parameter: "net.ipv4.icmp_echo_ignore_broadcasts", value: "1"}
+    - {parameter: "net.ipv6.conf.default.router_solicitations", value: "0"}
+    - {parameter: "net.ipv6.conf.all.router_solicitations", value: "0"}
   become: true
