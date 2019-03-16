@@ -2,12 +2,14 @@
 - name: Update the repository cache
   apt:
     update_cache: true
+    cache_valid_time: 3600
   become: true
 
 - name: Set hostname
   hostname:
     name: "comicwiki.dk"
   become: true
+  when: not run_in_container
 
 - name: Copy over hosts file
   template:
@@ -19,19 +21,25 @@
   become: true
   notify:
     - restart networking
+  when: not run_in_container
 
 - name: Install base packages
-  apt: name={{ item }} state=present
-  with_items:
-    - ca-certificates
-    - git
-    - python
-    - openssl
-    - zip
-    - imagemagick
-    - openssh-server
-    - rsync
-    - ntpdate
+  apt:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+      - ca-certificates
+      - git
+      - python
+      - openssl
+      - zip
+      - imagemagick
+      - openssh-server
+      - rsync
+      - ntpdate
+      - tzdata
+      - cron
   become: true
 
 - name: Set timezone to Europe/Copenhagen
@@ -85,3 +93,11 @@
     key: "{{ lookup('file', 'files/joen.key.pub') }}"
   become: true
   become_user: joen
+
+- name: Set the domain name in the kernel
+  sysctl:
+    name: kernel.domainname
+    value: comicwiki.dk
+    sysctl_file: /etc/sysctl.conf
+    reload: true
+  become: true

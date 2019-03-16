@@ -1,4 +1,4 @@
-# Your system has configured 'manage_etc_hosts' as True.
+''# Your system has configured 'manage_etc_hosts' as True.
 # As a result, if you wish for changes to this file to persist
 # then you will need to either
 # a.) make changes to the master file in /etc/cloud/templates/hosts.debian.tmpl

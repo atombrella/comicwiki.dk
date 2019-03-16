@@ -7,7 +7,14 @@ lint:
   name: yamllint
 platforms:
   - name: instance
-    image: ubuntu:18.04
+    image: ubuntu
+    image-version: "18.04"
+    privileged: true
+    pull: true
+    pid_mode: host
+    hostname: comicwiki.dk
+    volumes:
+      - /run/dbus/system_bus_socket:/run/dbus/system_bus_socket:ro
 provisioner:
   name: ansible
   lint:
