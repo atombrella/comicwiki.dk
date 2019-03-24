@@ -11,9 +11,10 @@
     name: "{{ item }}"
     state: present
     update_cache: true
-  with_items:
-    - certbot
-    - python-certbot-apache
+  vars:
+    packages:
+      - certbot
+      - python-certbot-apache
   become: true
 
 - name: Make cli.ini file

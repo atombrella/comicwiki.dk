@@ -1,19 +1,25 @@
 ---
 - name: Install python mysql package
-  apt: name={{ item }} state=present
-  with_items:
-    - python3-pymysql
-    - python3-mysqldb
-    - python3-dev
-    - libmysqlclient-dev
-    - python-mysql.connector
+  apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+      - python3-pymysql
+      - python3-mysqldb
+      - python3-pip
+      - python3-dev
+      - libmysqlclient-dev
+      - python-mysql.connector
   become: true
 
 - name: Install MySQL packages
-  apt: name={{ item }} state=present
-  with_items:
-    - mysql-server
-    - mysql-client
+  apt:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+      - mysql-server
+      - mysql-client
   become: true
 
 - name: Removes anonymous user account for localhost

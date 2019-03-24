@@ -1,21 +1,24 @@
 ---
 - name: Install fail2ban and iptables
-  apt: name={{ item }} state=present
-  with_items:
-    - iptables
-    - iptables-persistent
-    - fail2ban
-    - unattended-upgrades
-    - auditd
-    - apparmor
+  apt:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+      - iptables
+      - iptables-persistent
+      - fail2ban
+      - unattended-upgrades
+      - apparmor
   become: true
 
 - name: Remove unneeded tools
   apt:
-    name: "{{ item }}"
+    name: "{{ packages }}"
     state: absent
-  with_items:
-    - telnet
+  vars:
+    packages:
+      - telnet
   become: true
 
 - name: iptables accept related
