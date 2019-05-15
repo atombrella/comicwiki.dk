@@ -9,10 +9,18 @@ platforms:
   - name: instance
     image: ubuntu:18.04
     privileged: true
+    pull: true
+    pid: host
+    pid_mode: host
+    hostname: "comicwiki.dk"
 provisioner:
   name: ansible
+  options:
+    vvv: true
   lint:
     name: ansible-lint
+  playbooks:
+    converge: ${MOLECULE_PLAYBOOK:-playbook.yml}
 scenario:
   name: default
 verifier:

@@ -1,6 +1,8 @@
 ---
 - name: Converge
   hosts: all
+  vars:
+    run_in_container: true
   roles:
     - role: base
-    - role: mysql
+    - {role: mysql, become: true}
