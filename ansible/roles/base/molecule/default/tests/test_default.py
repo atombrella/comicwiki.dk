@@ -72,3 +72,9 @@ def test_installed_packages(host, package):
     pkg = host.package(package)
 
     assert pkg.is_installed
+
+
+def test_domain_name_sysctl(host):
+    command = host.run('sysctl kernel.domainname')
+
+    assert 'kernel.domainname = comicwiki.dk' == command.stdout
