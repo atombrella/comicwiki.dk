@@ -11,3 +11,4 @@ composer.phar
 *.retry
 __pycache__
 .pytest_cache
+*.log
