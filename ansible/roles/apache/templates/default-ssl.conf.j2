@@ -27,11 +27,6 @@
 
     DocumentRoot /var/www/html
 
-    Header always set Strict-Transport-Security "max-age=63072000; includeSubdomains; preload"
-    Header unset X-Powered-By
-
-    Header always set Feature-Policy "accelerometer 'none'; camera 'none'; geolocation 'none'; gyroscope 'none'; magnetometer 'none'; microphone 'none'; payment 'none'; usb 'none'"
-
     Options -FollowSymLinks -SymLinksIfOwnerMatch
 
     <IfModule mod_expires.c>

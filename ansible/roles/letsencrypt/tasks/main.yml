@@ -1,21 +1,13 @@
 ---
-- name: Add PPA for certbot
-  apt_repository:
-    repo: 'ppa:certbot/certbot'
-    state: present
-    update_cache: true
-  become: true
-
 - name: Install certbot
   apt:
-    name: "{{ item }}"
+    name: "{{ packages }}"
     state: present
     update_cache: true
   vars:
     packages:
       - certbot
       - python-certbot-apache
-  become: true
 
 - name: Make cli.ini file
   copy:
@@ -24,7 +16,6 @@
     mode: 0644
     group: root
     owner: root
-  become: true
 
 - name: Make directories for hooks
   file:
@@ -38,7 +29,6 @@
     - pre
     - post
     - deploy
-  become: true
 
 - name: Make directories for hooks
   file:
@@ -47,7 +37,6 @@
     mode: 0755
     owner: root
     group: root
-  become: true
 
 - name: Make renewal hooks
   copy:
@@ -56,7 +45,6 @@
     mode: 0755
     owner: root
     group: root
-  become: true
 
 - name: Make renewal job
   copy:
@@ -65,17 +53,20 @@
     owner: root
     group: root
     mode: 0755
-  become: true
+
+- name:
+  debug:
+    msg: ansible_facts.ansible_hostname
 
 - name: Get www certificate
-  command: certbot certonly -d www.comicwiki.dk -d comicwiki.dk
+  command: certbot certonly --standalone --agree-tos --register-unsafely-without-email -d www.comicwiki.dk -d comicwiki.dk
   args:
     creates: /etc/letsencrypt/live/www.comicwiki.dk
-  become: true
+  when: ansible_facts.ansible_hostname != 'localhost'
+  ignore_errors: true
 
 - name: Adjust renewal interval for certificate
   lineinfile:
     path: /etc/letsencrypt/renewal/www.comicwiki.dk.conf
     regexp: '^renew_before_expiry'
     line: 'renew_before_expiry = 7 days'
-  become: true

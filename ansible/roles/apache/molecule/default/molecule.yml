@@ -9,6 +9,10 @@ platforms:
   - name: ubuntu
     image: ubuntu:18.04
     privileged: true
+    pull: true
+    extra_hosts:
+      - "comicwiki.dk:127.0.0.1"
+      - "lvh.me:127.0.0.1"
 provisioner:
   name: ansible
   lint:

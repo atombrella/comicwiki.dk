@@ -12,6 +12,102 @@ html, body {
   -webkit-box-sizing: border-box;
 }
 
+// for printable sections that need to be hidden
+@media print {
+	.ns--1 .ambox,
+	.ns-0 .ambox,
+	.ns--1 .navbox,
+	.ns-0 .navbox,
+	.ns--1 .vertical-navbox,
+	.ns-0 .vertical-navbox,
+	.ns--1 .infobox.sisterproject,
+	.ns-0 .infobox.sisterproject,
+	.ns--1 .hatnote,
+	.ns-0 .hatnote,
+	.ns--1 .dablink,
+	.ns-0 .dablink,
+	.ns--1 .metadata,
+	.ns-0 .metadata,
+	.sistersitebox,
+	.editlink,
+	.navbar,
+	a.NavToggle,
+	span.collapseButton,
+	span.mw-collapsible-toggle,
+	th .sortkey,
+	td .sortkey,
+	#mw-revision-nav {
+		display: none !important
+	}
+	.nourlexpansion a.external.text:after,
+	.nourlexpansion a.external.autonumber:after {
+		display: none !important
+	}
+	table.collapsible tr,
+	div.NavContent {
+		display: block !important
+	}
+	table.collapsible tr {
+		display: table-row !important
+	}
+	.mw-parser-output .mw-collapsed .mw-collapsible-content {
+		display: block !important
+	}
+	.mw-parser-output table.mw-collapsed>*>tr {
+		display: table-row !important
+	}
+	.mw-parser-output ol.mw-collapsed>li,
+	.mw-parser-output ul.mw-collapsed>li {
+		display: list-item !important
+	}
+	#firstHeading {
+		margin: 0
+	}
+	#content a.external.text:after,
+	#content a.external.autonumber:after {
+		word-wrap: break-word
+	}
+	.infobox {
+		border: solid 1px #aaa;
+		background-color: #fff;
+		border-spacing: 0;
+		border-collapse: collapse;
+		width: 180pt !important
+	}
+	.infobox>*>tr>td,
+	.infobox>*>tr>th {
+		padding: 2px 5px;
+		border-bottom: 1px solid #EAECF0
+	}
+	.infobox a,
+	.infobox>*>tr:last-child>th,
+	.infobox>*>tr:last-child>td {
+		border: 0
+	}
+	.refbegin a,
+	.references a,
+	.reference a {
+		color: black !important
+	}
+	.reference a {
+		border-bottom: 0
+	}
+	ol.references,
+	div.reflist,
+	div.refbegin,
+	cite * {
+		font-size: inherit !important
+	}
+	.refbegin li,
+	.references li {
+		color: #666;
+		line-height: 14pt
+	}
+	.printfooter {
+		clear: both
+	}
+}
+
 /**
  * Generelt layout
  */

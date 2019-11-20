@@ -11,7 +11,7 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 
 @pytest.mark.parametrize("package", [
     "apache2",
-    "mod_pagespeed"
+    "mod_pagespeed",
 ])
 def test_package(host, package):
     pkg = host.package(package)
@@ -36,7 +36,7 @@ def test_available_sites(host, conf_file):
     assert file.exists
     assert file.owner == 'root'
     assert file.group == 'root'
-    assert file.mode == '0644'
+    assert file.mode == 0o0644
 
 
 @pytest.mark.parametrize("conf_file", [
@@ -46,7 +46,35 @@ def test_available_sites(host, conf_file):
 def test_enabled_sites(host, conf_file):
     file = host.file(conf_file)
 
-    assert os.path.islink(file)
+    assert file.exists
+    assert file.is_symlink
+    assert file.linked_to(conf_file.replace('enabled', 'available'))
     assert file.owner == 'root'
     assert file.group == 'root'
-    assert file.mode == '0644'
+    assert file.mode == 0o644
+
+
+@pytest.mark.parametrize("port", [
+    80,
+    443,
+])
+def test_listen(host, port):
+    socket = host.socket(f'tcp://0.0.0.0:{port}')
+
+    assert socket.is_listening
+
+
+@pytest.mark.parametrize("module", [
+    "headers",
+    "rewrite",
+    "expires",
+    "ssl",
+    "pagespeed",
+])
+def test_apache_modules_activated(host, module):
+    mod = host.file(f'/etc/apache/mods-enabled/{module}')
+
+    assert mod.exists
+    assert mod.owner == 'www-data'
+    assert mod.group == 'www-data'
+    assert mod.mode == 0o0644
