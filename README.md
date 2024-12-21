@@ -15,3 +15,9 @@ Mediawiki is backed by the [Chameleon skin](https://www.mediawiki.org/wiki/Skin:
 using [Bootstrap 3.3](https://getbootstrap.com/docs/3.3/) as the primary frontend framework.
 
 The code is running on a DigitalOcean droplet, with everything running on the same node.
+
+## Upgrades
+
+Mediawiki 1.39 is now used. Along with more 
+
+The PHP

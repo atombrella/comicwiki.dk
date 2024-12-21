@@ -1,0 +1,11 @@
+---
+- name: Check if package is installed
+  hosts: all
+  tasks:
+    - name: Check if php is installed
+      become: yes
+      package_facts:
+        manager: apt
+      assert:
+        that:
+          - "php" in ansible_facts.packages

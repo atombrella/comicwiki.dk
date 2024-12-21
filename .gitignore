@@ -12,3 +12,6 @@ composer.phar
 __pycache__
 .pytest_cache
 *.log
+
+# Vault Password file
+vault.pw

@@ -1,8 +1,6 @@
 ---
 - hosts: server
   gather_facts: false
-  vars:
-    run_in_container: false
   roles:
     - base
     - {role: letsencrypt, become: true}
@@ -10,4 +8,3 @@
     - {role: mysql, become: true}
     - mediawiki
     - {role: security, become: true}
-    # - postfix

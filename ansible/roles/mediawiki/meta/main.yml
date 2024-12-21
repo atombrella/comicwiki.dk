@@ -1,7 +1,9 @@
 ---
 galaxy_info:
-  author: your name
-  description: your description
+  role_name: mediawiki # if absent directory name hosting role is used instead
+  namespace: comicwiki # if absent, author is used instead
+  author: Mads Jensen
+  description: Role to install Comicwiki.dk Mediawiki related files
   company: your company (optional)
 
   # If the issue tracker for your role is not on github, uncomment the

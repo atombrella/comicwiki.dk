@@ -1,0 +1,6 @@
+ansible
+molecule
+testinfra
+pymysql
+mysql-connector-python
+ansible-lint

@@ -1,0 +1,26 @@
+---
+- name: Include a playbook from a collection
+  ansible.builtin.import_playbook: ../../install.yml
+
+#- name: Converge
+#  hosts: localhost
+#  become: true
+
+#  pre_tasks:
+#    - name: Ensure openssh-server is installed.
+#      package:
+#        name:
+#          - openssh-server
+#        state: present
+#    - name: Ensure apache2 is installed.
+#      package:
+#        name:
+#          - apache2
+#        state: present
+
+#  tasks:
+#    - include_tasks: roles/base/tasks/main.yml
+#    - include_tasks: roles/apache/tasks/main.yml
+
+
+  # - import_playbook: ../roles/base/tasks/main.yml

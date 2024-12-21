@@ -1,0 +1,15 @@
+---
+- name: Verify
+  hosts: all
+  tasks:
+    - name: Initialize role without actually running it
+      ansible.builtin.include_role:
+        name: mediawiki
+        tasks_from: main
+
+    - name: Gather package list
+      ansible.builtin.package_facts:
+
+    - name: Verify php is installed
+      ansible.builtin.assert:
+        that: "'php' in ansible_facts.packages"

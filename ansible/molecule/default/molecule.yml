@@ -1,0 +1,17 @@
+---
+dependency:
+  name: galaxy
+platforms:
+  - name: molecule-ubuntu
+    image: ubuntu:22.04
+    privileged: true
+    pre_built_image: true
+  - name: molecule-ubuntu
+    image: ubuntu:24.04
+    privileged: true
+    pre_built_image: true
+provisioner:
+  name: ansible
+verifier:
+  name: testinfra
+  directory: tests

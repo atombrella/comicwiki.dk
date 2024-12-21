@@ -1,0 +1,33 @@
+---
+- name: Converge
+  hosts: all
+  roles:
+    - role: mediawiki
+
+# ---
+#- name: Converge
+#  hosts: localhost
+
+# - name: Include a playbook from a collection
+#  ansible.builtin.import_playbook: playbook.yml
+
+#   pre_tasks:
+#     - name: Ensure openssh-server is installed.
+#       package:
+#         name:
+#           - openssh-server
+#         state: present
+#     - name: Ensure apache2 is installed.
+#       package:
+#         name:
+#           - apache2
+#           - php
+#         state: present
+
+
+#  tasks:
+#    - include_tasks: roles/base/tasks/main.yml
+#    - include_tasks: roles/apache/tasks/main.yml
+
+
+    # - import_playbook: playbook.yml
