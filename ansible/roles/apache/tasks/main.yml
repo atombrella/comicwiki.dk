@@ -127,7 +127,7 @@
 - name: Create PHP configuration for Apache
   template:
     src: php.ini.j2
-    dest: /etc/php/7.2/apache2/php.ini
+    dest: /etc/php/8.4/apache2/php.ini
     mode: 0644
     group: root
     owner: root

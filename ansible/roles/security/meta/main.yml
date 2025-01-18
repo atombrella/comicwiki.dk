@@ -1,6 +1,9 @@
 ---
 galaxy_info:
+  role_name: security
+  namespace: comicwiki
   author: Mads Jensen
+
   description: |
     Configures firewall, unattended upgrades and some kernel flags
     for increased security
@@ -16,8 +19,8 @@ galaxy_info:
   platforms:
     - name: Ubuntu
       versions:
-        - 18
-        - 19
+        - 22
+        - 24
 
   galaxy_tags: []
 
