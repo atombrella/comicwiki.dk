@@ -20,4 +20,6 @@ verifier:
   name: testinfra
 lint: |
   set -e
+
+  ansible-lint
   flake8
