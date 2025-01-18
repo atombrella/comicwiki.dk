@@ -5,7 +5,10 @@ driver:
   name: docker
 platforms:
   - name: instance
-    image: ubuntu:18.04
+    image: ubuntu:22.04
+    privileged: true
+  - name: instance
+    image: ubuntu:24.04
     privileged: true
 provisioner:
   name: ansible

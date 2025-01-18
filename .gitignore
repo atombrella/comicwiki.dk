@@ -15,3 +15,6 @@ __pycache__
 
 # Vault Password file
 vault.pw
+
+# Visual Code
+.vscode

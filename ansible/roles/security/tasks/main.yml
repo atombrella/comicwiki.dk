@@ -1,6 +1,6 @@
 ---
 - name: Install fail2ban and iptables
-  apt:
+  ansible.builtin.apt:
     name: "{{ packages }}"
     state: present
   vars:
@@ -12,15 +12,15 @@
       - apparmor
 
 - name: Remove unneeded tools
-  apt:
+  ansible.builtin.apt:
     name: "{{ packages }}"
     state: absent
   vars:
     packages:
       - telnet
 
-- name: iptables accept related
-  iptables:
+- name: Configure iptables accept related
+  ansible.builtin.iptables:
     chain: INPUT
     ctstate: ESTABLISHED,RELATED
     jump: ACCEPT
@@ -32,7 +32,7 @@
     - iptables save
 
 - name: Configure iptables ports
-  iptables:
+  ansible.builtin.iptables:
     chain: INPUT
     protocol: tcp
     destination_port: "{{ item.port }}"
@@ -50,7 +50,7 @@
     - iptables save
 
 - name: Firewall rule - allow all loopback traffic
-  iptables:
+  ansible.builtin.iptables:
     action: append
     chain: INPUT
     in_interface: lo
@@ -59,7 +59,7 @@
     - iptables save
 
 - name: Disable icmp ping ipv4
-  iptables:
+  ansible.builtin.iptables:
     chain: INPUT
     protocol: icmp
     icmp_type: "echo-request"
@@ -68,7 +68,7 @@
     - iptables save
 
 - name: Disable icmp ping ipv6
-  iptables:
+  ansible.builtin.iptables:
     chain: INPUT
     protocol: ipv6-icmp
     icmp_type: "echo-request"
@@ -78,7 +78,7 @@
     - iptables save
 
 - name: Firewall rule - drop any traffic without rule
-  iptables:
+  ansible.builtin.iptables:
     chain: INPUT
     jump: DROP
   become: true
@@ -87,30 +87,30 @@
     - iptables save
 
 - name: SSH server settings
-  template:
+  ansible.builtin.template:
     src: sshd_config.j2
     dest: /etc/ssh/sshd_config
-    mode: 0644
+    mode: "0644"
     owner: root
     group: root
   notify:
     - restart ssh
 
 - name: Override some basic fail2ban configurations
-  template:
+  ansible.builtin.template:
     src: jail.local.j2
     dest: /etc/fail2ban/jail.local
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
 
 - name: Activitate unattended upgrades
-  template:
+  ansible.builtin.template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   with_items:
     - {src: "20auto-upgrades.j2", dest: "/etc/apt/apt.conf.d/20auto-upgrades"}
     - {src: "50unattended-upgrades.j2", dest: "/etc/apt/apt.conf.d/50unattended-upgrades"}
@@ -121,7 +121,7 @@
 # - https://www.cyberciti.biz/faq/linux-kernel-etcsysctl-conf-security-hardening/
 # - https://blog.confirm.ch/sysctl-tuning-linux/
 - name: Tweak kernel parameters for security
-  sysctl:
+  ansible.posix.sysctl:
     name: "{{ item.parameter }}"
     value: "{{ item.value }}"
     sysctl_file: /etc/sysctl.conf
@@ -148,9 +148,9 @@
     - {parameter: "net.ipv6.conf.default.max_addresses", value: "1"}
 
 - name: Create securetty
-  template:
+  ansible.builtin.template:
     src: securetty.j2
     dest: /etc/securetty
     owner: root
     group: root
-    mode: 0400
+    mode: "0400"
