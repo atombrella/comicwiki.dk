@@ -29,7 +29,7 @@
     - ipv4
     - ipv6
   notify:
-    - iptables save
+    - Save iptables
 
 - name: Configure iptables ports
   ansible.builtin.iptables:
@@ -47,7 +47,7 @@
     - {port: 443, version: "ipv4"}
     - {port: 443, version: "ipv6"}
   notify:
-    - iptables save
+    - Save iptables
 
 - name: Firewall rule - allow all loopback traffic
   ansible.builtin.iptables:
@@ -56,7 +56,7 @@
     in_interface: lo
     jump: ACCEPT
   notify:
-    - iptables save
+    - Save iptables
 
 - name: Disable icmp ping ipv4
   ansible.builtin.iptables:
@@ -65,7 +65,7 @@
     icmp_type: "echo-request"
     jump: DROP
   notify:
-    - iptables save
+    - Save iptables
 
 - name: Disable icmp ping ipv6
   ansible.builtin.iptables:
@@ -75,7 +75,7 @@
     jump: DROP
     ip_version: ipv6
   notify:
-    - iptables save
+    - Save iptables
 
 - name: Firewall rule - drop any traffic without rule
   ansible.builtin.iptables:
@@ -84,7 +84,7 @@
   become: true
   become_user: root
   notify:
-    - iptables save
+    - Save iptables
 
 - name: SSH server settings
   ansible.builtin.template:
@@ -94,7 +94,7 @@
     owner: root
     group: root
   notify:
-    - restart ssh
+    - Restart ssh
 
 - name: Override some basic fail2ban configurations
   ansible.builtin.template:
@@ -115,7 +115,7 @@
     - {src: "20auto-upgrades.j2", dest: "/etc/apt/apt.conf.d/20auto-upgrades"}
     - {src: "50unattended-upgrades.j2", dest: "/etc/apt/apt.conf.d/50unattended-upgrades"}
   notify:
-    - unattended-upgrades restart
+    - Restart unattended-upgrades
 
 # most of them were added from
 # - https://www.cyberciti.biz/faq/linux-kernel-etcsysctl-conf-security-hardening/

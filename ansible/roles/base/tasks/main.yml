@@ -1,37 +1,25 @@
 ---
 - name: Update the repository cache
-  apt:
+  ansible.builtin.apt:
     update_cache: true
     cache_valid_time: 3600
   become: true
 
 - name: Set hostname
-  hostname:
+  ansible.builtin.hostname:
     name: "comicwiki.dk"
   become: true
   when: not run_in_container
 
-- name: Copy over hosts file
-  template:
-    src: hosts
-    dest: /etc/hosts
-    mode: 0644
-    group: root
-    owner: root
-  become: true
-  notify:
-    - restart networking
-  when: not run_in_container
-
 - name: Install base packages
-  apt:
+  ansible.builtin.apt:
     name: "{{ packages }}"
     state: present
   vars:
     packages:
       - ca-certificates
       - git
-      - python
+      - python-is-python3
       - openssl
       - zip
       - imagemagick
@@ -40,15 +28,16 @@
       - ntpdate
       - tzdata
       - cron
+      - util-linux-extra
   become: true
 
 - name: Set timezone to Europe/Copenhagen
-  timezone:
+  community.general.timezone:
     name: Europe/Copenhagen
   become: true
 
 - name: Create ntpdate cronjob
-  copy:
+  ansible.builtin.copy:
     src: ntpdate.sh
     dest: /etc/cron.hourly/ntpdate.sh
     mode: 0755
@@ -57,13 +46,13 @@
   become: true
 
 - name: Make sure we have a 'wheel' group
-  group:
+  ansible.builtin.group:
     name: wheel
     state: present
   become: true
 
 - name: Allow 'wheel' group to have passwordless sudo
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: /etc/sudoers
     state: present
     regexp: '^%wheel'
@@ -72,7 +61,7 @@
   become: true
 
 - name: Create local users
-  user:
+  ansible.builtin.user:
     name: "{{ item }}"
     shell: /bin/bash
     groups: users,sudo,wheel
@@ -83,19 +72,19 @@
   become: true
 
 - name: Add authorized keys for Mads
-  authorized_key:
+  ansible.posix.authorized_key:
     user: mads
     key: "{{ lookup('file', 'files/mads.key.pub') }}"
 
 - name: Add authorized keys for Joen
-  authorized_key:
+  ansible.posix.authorized_key:
     user: joen
     key: "{{ lookup('file', 'files/joen.key.pub') }}"
   become: true
   become_user: joen
 
 - name: Set the domain name in the kernel
-  sysctl:
+  ansible.posix.sysctl:
     name: kernel.domainname
     value: comicwiki.dk
     sysctl_file: /etc/sysctl.conf
