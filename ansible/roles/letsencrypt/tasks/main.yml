@@ -1,16 +1,16 @@
 ---
 - name: Install certbot
-  apt:
+  ansible.builtin.apt:
     name: "{{ packages }}"
     state: present
     update_cache: true
   vars:
     packages:
       - certbot
-      - python-certbot-apache
+      - python3-certbot-apache
 
 - name: Make cli.ini file
-  copy:
+  ansible.builtin.copy:
     src: cli.ini
     dest: /etc/letsencrypt/cli.ini
     mode: 0644
@@ -18,7 +18,7 @@
     owner: root
 
 - name: Make directories for hooks
-  file:
+  ansible.builtin.file:
     path: "/etc/letsencrypt/renewal-hooks/{{ item }}"
     state: directory
     mode: 0755
@@ -31,7 +31,7 @@
     - deploy
 
 - name: Make directories for hooks
-  file:
+  ansible.builtin.file:
     path: "/etc/letsencrypt/renewal/"
     state: directory
     mode: 0755
@@ -39,7 +39,7 @@
     group: root
 
 - name: Make renewal hooks
-  copy:
+  ansible.builtin.copy:
     src: apache.sh
     dest: /etc/letsencrypt/renewal-hooks/
     mode: 0755
@@ -47,26 +47,16 @@
     group: root
 
 - name: Make renewal job
-  copy:
+  ansible.builtin.copy:
     src: cert-renew.sh
     dest: /etc/cron.daily/cert-renew.sh
     owner: root
     group: root
     mode: 0755
 
-- name:
-  debug:
-    msg: ansible_facts.ansible_hostname
-
 - name: Get www certificate
-  command: certbot certonly --standalone --agree-tos --register-unsafely-without-email -d www.comicwiki.dk -d comicwiki.dk
+  ansible.builtin.command: certbot certonly --standalone --agree-tos --register-unsafely-without-email -d www.comicwiki.dk -d comicwiki.dk
   args:
     creates: /etc/letsencrypt/live/www.comicwiki.dk
-  when: ansible_facts.ansible_hostname != 'localhost'
+  when: inventory_hostname != 'localhost'
   ignore_errors: true
-
-- name: Adjust renewal interval for certificate
-  lineinfile:
-    path: /etc/letsencrypt/renewal/www.comicwiki.dk.conf
-    regexp: '^renew_before_expiry'
-    line: 'renew_before_expiry = 7 days'

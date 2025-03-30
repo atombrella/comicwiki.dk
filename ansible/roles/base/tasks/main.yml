@@ -19,6 +19,7 @@
     packages:
       - ca-certificates
       - git
+      - curl
       - python-is-python3
       - openssl
       - zip

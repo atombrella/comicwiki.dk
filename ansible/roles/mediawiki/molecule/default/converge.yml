@@ -3,4 +3,5 @@
   hosts: all
   roles:
     - {role: base, become: true}
+    - {role: apache, become: true}
     - role: mediawiki
