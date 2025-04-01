@@ -11,6 +11,7 @@
       - php-json
       - php-common
       - php-xml
+      - php-curl
   become: true
 
 - name: Delete /var/www/html/index.html file
@@ -19,18 +20,32 @@
     state: absent
   become: true
 
+- name: Check
+  ansible.builtin.stat:
+    path: /var/www/html/.git
+  register: installation
+
 - name: Install Mediawiki
   ansible.builtin.git:
-    repo: https://gerrit.wikimedia.org/r/p/mediawiki/core.git
+    repo: https://github.com/wikimedia/mediawiki.git
     dest: /var/www/html/
     version: REL1_39
     depth: 1
     update: false
   become: true
-  become_user: www-data
-  tags: never
+  when: not installation.stat.exists
 
-- include_tasks: composer.yml
+- name: Set Mediawiki owner/group rights correctly
+  ansible.builtin.file:
+    path: /var/www/html
+    state: directory
+    recurse: true
+    owner: www-data
+    group: www-data
+  become: true
+
+- name: Install Composer
+  ansible.builtin.include_tasks: composer.yml
 
 - name: Copy over composer.local.json
   ansible.builtin.copy:
