@@ -12,6 +12,7 @@
       - php-common
       - php-xml
       - php-curl
+      - php-intl
   become: true
 
 - name: Delete /var/www/html/index.html file
@@ -37,7 +38,7 @@
 
 - name: Set Mediawiki owner/group rights correctly
   ansible.builtin.file:
-    path: /var/www/html
+    path: /var/www/
     state: directory
     recurse: true
     owner: www-data
@@ -59,17 +60,28 @@
 
 - name: Install dependencies via composer
   community.general.composer:
-    command: install
-    working_dir: /var/www/html
+    command: update
+    arguments: "--no-install --no-progress"
+    working_dir: "/var/www/html"
     no_dev: true
   become: true
   become_user: www-data
+
+- name: Create skin resources
+  ansible.builtin.file:
+    path: "/var/www/html/resources/comicwiki/images"
+    state: directory
+    mode: "0755"
+    owner: "www-data"
+    group: "www-data"
+    recurse: true
+  become: true
 
 - name: Copy necessary resources
   ansible.builtin.copy:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
-    mode: 0644
+    mode: "0644"
     owner: www-data
     group: www-data
   with_items:
@@ -78,26 +90,16 @@
     - {src: "comicwiki.css.map", dest: "/var/www/html/resources/comicwiki/comicwiki.css.map"}
     - {src: "comicwiki.js", dest: "/var/www/html/resources/comicwiki/comicwiki.js"}
   become: true
-  notify:
-    - Reset chameleon
+  # notify:
+  #   - Reset chameleon
 
 - name: Copy over the local settings file
   ansible.builtin.template:
     src: LocalSettings.php.j2
     dest: /var/www/html/LocalSettings.php
-    mode: 0600
+    mode: 0400
     owner: www-data
     group: www-data
-  become: true
-
-- name: Create resources directory for comicwiki.dk
-  ansible.builtin.file:
-    path: /var/www/html/resources/comicwiki/images
-    state: directory
-    mode: 0755
-    owner: www-data
-    group: www-data
-    recurse: true
   become: true
 
 - name: Ignore comicwiki resources dir
@@ -129,7 +131,7 @@
   ansible.builtin.copy:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
-    mode: 0644
+    mode: "0644"
     group: www-data
     owner: www-data
   with_items:
