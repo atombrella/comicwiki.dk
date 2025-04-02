@@ -2,7 +2,7 @@
 #   Enable/Disable SSL for this virtual host.
 SSLEngine on
 
-{% if ansible_host == 'localhost' %}
+{% if inventory_hostname == 'localhost' %}
 SSLCertificateFile    /etc/ssl/certs/ssl-cert-snakeoil.pem
 SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key
 {% else %}
