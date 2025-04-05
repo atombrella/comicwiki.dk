@@ -144,11 +144,15 @@ $wgGroupPermissions['*']['edit'] = false;
 ## Default skin: you can change the default skin. Use the internal symbolic
 ## names, ie 'vector', 'monobook':
 $wgDefaultSkin = "chameleon";
-$egChameleonLayoutFile= __DIR__ . '/resources/comicwiki/comicwiki-header.xml';
+$egChameleonThemeFile = __DIR__ . '/resources/comicwiki/comicwiki.scss';
 
-$egChameleonExternalStyleModules = array(
-    __DIR__ . '/resources/comicwiki/comicwiki.less' => $wgScriptPath
-);
+$egChameleonAvailableLayoutFiles = [
+	'standard'   => __DIR__ . '/skins/chameleon/layouts/standard.xml',
+	'navhead'    => __DIR__ . '/resources/comicwiki/comicwiki-header.xml',
+	'fixedhead'  => __DIR__ . '/skins/chameleon/layouts/fixedhead.xml',
+	'stickyhead' => __DIR__ . '/skins/chameleon/layouts/stickyhead.xml',
+	'clean'      => __DIR__ . '/skins/chameleon/layouts/clean.xml',
+];
 
 # End of automatically generated settings.
 # Add more configuration options below.

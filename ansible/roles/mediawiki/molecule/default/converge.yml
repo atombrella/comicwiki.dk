@@ -1,8 +1,7 @@
 ---
 - name: Converge
   hosts: all
-  vars:
-    run_in_container: true
   roles:
     - {role: base, become: true}
-    - {role: mysql, become: true}
+    - {role: apache, become: true}
+    - role: mediawiki

@@ -1,5 +1,0 @@
-ansible>=2.7
-molecule
-testinfra
-pymysql
-mysql-connector-python

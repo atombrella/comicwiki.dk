@@ -1,18 +1,18 @@
 ---
-- name: restart apache
-  service:
+- name: Restart apache
+  ansible.builtin.service:
     name: apache2
     state: restarted
   become: true
 
-- name: restart apache
-  service:
+- name: Stop apache
+  ansible.builtin.service:
     name: apache2
     state: stopped
   become: true
 
-- name: reload apache
-  service:
+- name: Reload apache
+  ansible.builtin.service:
     name: apache2
     state: reloaded
   become: true

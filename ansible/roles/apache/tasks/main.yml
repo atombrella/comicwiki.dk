@@ -1,10 +1,15 @@
----
 - name: Install apache2
-  apt: name=apache2 state=present update_cache=yes
+  ansible.builtin.apt:
+    name: apache2
+    state: present
+    update_cache: true
   become: true
 
 - name: Install Apache modules
-  apt: name={{ item }} state=present update_cache=yes
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: true
   with_items:
     - modsecurity-crs
     - libapache2-mod-php
@@ -12,24 +17,24 @@
   become: true
 
 - name: Install mod_pagespeed
-  apt:
+  ansible.builtin.apt:
     deb: https://dl-ssl.google.com/dl/linux/direct/mod-pagespeed-stable_current_amd64.deb
   become: true
 
 - name: Create sites directories
-  file:
-    state=directory
-    path={{ item }}
-    mode=0755
-    owner=www-data
-    group=www-data
+  ansible.builtin.file:
+    state: directory
+    path: "{{ item }}"
+    mode: "0755"
+    owner: www-data
+    group: www-data
   with_items:
     - /etc/apache2/sites-available
     - /etc/apache2/sites-enabled
   become: true
 
 - name: Enable apache module
-  apache2_module:
+  community.general.apache2_module:
     state: present
     name: "{{ item }}"
   with_items:
@@ -39,9 +44,10 @@
     - ssl
     - pagespeed
   become: true
+  notify: Restart apache
 
 - name: Make ports listen on IPv4 and IPv6
-  template:
+  ansible.builtin.template:
     src: ports.conf
     dest: /etc/apache2/ports.conf
     mode: 0644
@@ -50,7 +56,7 @@
   become: true
 
 - name: Auxiliary security configuration
-  template:
+  ansible.builtin.template:
     src: security.conf
     dest: /etc/apache2/conf-available/security.conf
     mode: 0644
@@ -59,7 +65,7 @@
   become: true
 
 - name: Enable security configuration
-  file:
+  ansible.builtin.file:
     state: link
     src: /etc/apache2/conf-available/security.conf
     path: /etc/apache2/conf-enabled/security.conf
@@ -68,7 +74,7 @@
   become: true
 
 - name: Copy available sites
-  template:
+  ansible.builtin.template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
     owner: www-data
@@ -80,7 +86,7 @@
   become: true
 
 - name: Enable sites
-  file:
+  ansible.builtin.file:
     state: link
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
@@ -91,10 +97,10 @@
     - {src: '/etc/apache2/sites-available/default-ssl.conf', dest: '/etc/apache2/sites-enabled/default-ssl.conf'}
   become: true
   notify:
-    - reload apache
+    - Reload apache
 
 - name: Create modsecurity configuration
-  template:
+  ansible.builtin.template:
     src: modsecurity.conf.j2
     dest: /etc/modsecurity/modsecurity.conf
     mode: 0644
@@ -102,10 +108,10 @@
     owner: root
   become: true
   notify:
-    - restart apache
+    - Restart apache
 
 - name: Create Apache configuration
-  template:
+  ansible.builtin.template:
     src: apache2.conf.j2
     dest: /etc/apache2/apache2.conf
     mode: 0644
@@ -113,10 +119,10 @@
     owner: www-data
   become: true
   notify:
-    - restart apache
+    - Restart apache
 
 - name: Copy over logrotate configuration
-  template:
+  ansible.builtin.template:
     src: logrotate.j2
     dest: /etc/logrotate.d/apache2
     mode: 0644
@@ -125,12 +131,12 @@
   become: true
 
 - name: Create PHP configuration for Apache
-  template:
+  ansible.builtin.template:
     src: php.ini.j2
-    dest: /etc/php/8.4/apache2/php.ini
+    dest: "{{ lookup('ansible.builtin.env', 'PHP_INI_DIR') }}/php.ini"
     mode: 0644
     group: root
     owner: root
   become: true
   notify:
-    - restart apache
+    - Restart apache

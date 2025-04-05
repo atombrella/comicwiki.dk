@@ -4,5 +4,5 @@
   vars:
     - run_in_container: true
   roles:
-    - role: base
+    - {role: base, become: true}
     - {role: apache, become: true}
