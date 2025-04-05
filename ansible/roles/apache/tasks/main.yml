@@ -7,7 +7,7 @@
 
 - name: Install Apache modules
   ansible.builtin.apt:
-    name: {{ item }}
+    name: "{{ item }}"
     state: present
     update_cache: true
   with_items:

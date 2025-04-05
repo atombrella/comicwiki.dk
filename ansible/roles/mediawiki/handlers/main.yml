@@ -1,18 +1,25 @@
 ---
-- name: update composer
-  composer:
+- name: Update composer
+  community.general.composer:
     command: update
     working_dir: /var/www/html
   become: true
+  become_user: www-data
 
-- name: reset pagespeed
-  file:
+- name: Reset pagespeed
+  ansible.builtin.file:
     path: /var/cache/mod_pagespeed/cache.flush
     state: touch
+    owner: root
+    group: root
+    mode: "0600"
   become: true
 
-- name: reset chameleon
-  file:
+- name: Reset chameleon
+  ansible.builtin.file:
     path: /var/www/html/LocalSettings.php
     state: touch
+    owner: www-data
+    group: www-data
+    mode: "0600"
   become: true

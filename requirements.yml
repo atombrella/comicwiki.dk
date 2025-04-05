@@ -1,7 +1,0 @@
-ansible>=2.7
-molecule
-mysql-connector-python
-paramiko
-pymysql
-pytest-testinfra
-testinfra
