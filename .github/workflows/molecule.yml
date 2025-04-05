@@ -24,5 +24,9 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      # test each of the roles
       - name: Molecule test
         run: molecule test
+        working_directory: "ansible/roles/mediawiki"
+        env:
+          ANSIBLE_ROLES_PATH: "ansible/roles"
