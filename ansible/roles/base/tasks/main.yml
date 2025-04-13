@@ -1,4 +1,7 @@
 ---
+- name: "print ansible_facts vars"
+  ansible.builtin.debug: var=ansible_facts
+
 - name: Update the repository cache
   ansible.builtin.apt:
     update_cache: true

@@ -3,6 +3,13 @@ dependency:
   name: galaxy
 driver:
   name: docker
+#   options:
+#     managed: False
+#     login_cmd_template: 'docker exec -ti {instance} bash'
+#     ansible_connection_options:
+#       ansible_connection: docker
+# platforms:
+#   - name: instance
 platforms:
   - name: instance
     image: ubuntu:22.04

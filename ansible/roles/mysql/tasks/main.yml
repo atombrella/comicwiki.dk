@@ -1,6 +1,6 @@
 ---
 - name: Install python mysql package
-  apt:
+  ansible.builtin.apt:
     name: "{{ packages }}"
   vars:
     packages:
@@ -13,7 +13,7 @@
       - python-mysql.connector
 
 - name: Install MySQL packages
-  apt:
+  ansible.builtin.apt:
     name: "{{ packages }}"
     state: present
   vars:
@@ -24,17 +24,18 @@
     - Restart mysql
 
 - name: Install pymysql
-  pip:
+  ansible.builtin.pip:
     name: pymysql
 
 - name: Start MySQL
-  service:
+  ansible.builtin.service:
     name: mysql
     enabled: true
     state: restarted
 
 - name: Generate new root password
-  command: openssl rand -hex 7 creates=/root/.my.cnf
+  ansible.builtin.command: |
+    openssl rand -hex 7 creates=/root/.my.cnf
   register: mysql_new_root_pass
 
 - name: Update root password
@@ -52,7 +53,7 @@
     - skip_ansible_lint
 
 - name: Create my.cnf
-  template:
+  ansible.builtin.template:
     src: templates/mysql/my.cnf
     desc: /root/.my.cnf
   when: mysql_new_root_pass.changed
@@ -60,12 +61,12 @@
     - skip_ansible_lint
 
 - name: Create the database
-  mysql_db:
+  community.mysql.mysql_db:
     name: comicwiki
     state: present
 
 - name: Removes anonymous user account for localhost
-  mysql_user:
+  community.mysql.mysql_user:
     name: ''
     host_all: true
     state: absent
@@ -75,7 +76,7 @@
 # warning from mysqltuner
 
 - name: Make database user
-  mysql_user:
+  community.mysql.mysql_user:
     name: "{{ db_user }}"
     password: "{{ db_password }}"
     priv: '*.*:ALL,GRANT'
@@ -89,14 +90,15 @@
 
 # not used, but nice to have for SystemD reference checks
 - name: Make MySQL restart check
-  template:
+  ansible.builtin.template:
     src: mysqlcheck.sh
     dest: /usr/local/bin/mysqlcheck.sh
-    mode: 0755
+    mode: "0755"
     owner: root
     group: root
 
 - name: Create self-signed certificates
-  command: mysql_rsa_ssl_setup --uid=mysql
+  ansible.builtin.command: |
+    mysql_rsa_ssl_setup --uid=mysql
   args:
     creates: /var/lib/mysql/server-cert.pem

@@ -27,6 +27,6 @@ jobs:
       # test each of the roles
       - name: Molecule test
         run: molecule test
-        working-directory: "${{ GITHUB_WORKSPACE }}/ansible/roles/mediawiki"
+        working-directory: "${GITHUB_WORKSPACE}/ansible/roles/mediawiki"
         env:
-          ANSIBLE_ROLES_PATH: "${{ GITHUB_WORKSPACE }}/ansible/roles"
+          ANSIBLE_ROLES_PATH: "${GITHUB_WORKSPACE}/ansible/roles"

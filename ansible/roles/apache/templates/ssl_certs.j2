@@ -2,11 +2,11 @@
 #   Enable/Disable SSL for this virtual host.
 SSLEngine on
 
-{% if inventory_hostname == 'localhost' %}
-SSLCertificateFile    /etc/ssl/certs/ssl-cert-snakeoil.pem
-SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key
-{% else %}
+{% if lookup('ansible.builtin.env', 'HOSTNAME')  != 'localhost' %}
 SSLCertificateFile    /etc/letsencrypt/live/www.comicwiki.dk/cert.pem
 SSLCertificateKeyFile /etc/letsencrypt/live/www.comicwiki.dk/privkey.pem
 SSLCertificateChainFile /etc/letsencrypt/live/www.comicwiki.dk/chain.pem
+{% else %}
+SSLCertificateFile    /etc/ssl/certs/ssl-cert-snakeoil.pem
+SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key
 {% endif %}
