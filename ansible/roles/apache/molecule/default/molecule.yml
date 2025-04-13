@@ -23,4 +23,3 @@ lint: |
 
   ansible-lint
   flake8
-

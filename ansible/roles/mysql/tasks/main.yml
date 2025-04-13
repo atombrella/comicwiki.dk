@@ -35,7 +35,9 @@
 
 - name: Generate new root password
   ansible.builtin.command: |
-    openssl rand -hex 7 creates=/root/.my.cnf
+    openssl rand -hex 7
+  args:
+    creates: /root/.my.cnf
   register: mysql_new_root_pass
 
 - name: Update root password
@@ -70,7 +72,6 @@
     name: ''
     host_all: true
     state: absent
-  ignore_errors: true
 
 # TODO set a password for the root user in mysql to get rid of the no-password
 # warning from mysqltuner
@@ -86,7 +87,6 @@
     login_password: 'joke'
   notify:
     - Restart mysql
-  ignore_errors: true
 
 # not used, but nice to have for SystemD reference checks
 - name: Make MySQL restart check

@@ -2,7 +2,6 @@
 galaxy_info:
   author: Mads Jensen
   description: Ansible role for managing the Apache configuration
-
   role_name: apache
   namespace: comicwiki
 

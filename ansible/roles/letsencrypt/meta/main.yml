@@ -2,6 +2,7 @@
 galaxy_info:
   author: Mads Jensen
   description: Role to manage letsencrypt certificates
+  namespace: comicwiki
 
   license: BSD
 

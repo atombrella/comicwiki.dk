@@ -21,9 +21,9 @@
 - name: Add Composer to global path
   ansible.builtin.copy:
     dest: /usr/local/bin/composer
+    src: /usr/src/composer.phar
     group: root
     mode: "0755"
     owner: root
-    src: /usr/src/composer.phar
     remote_src: true
   become: true
