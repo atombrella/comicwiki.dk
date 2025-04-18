@@ -4,10 +4,13 @@
     checksum: "sha384:dac665fdc30fdd8ec78b38b9800061b4150413ff2e3b6f88543c636f7cd84f6db9189d43a81e5503cda447da73c7e5b6"
     dest: /usr/src/
     url: https://getcomposer.org/installer
+    mode: 0400
   become: true
 
 - name: Download and install Composer
-  ansible.builtin.shell: curl -sS https://getcomposer.org/installer | php
+  ansible.builtin.shell:
+    cmd: set -o pipefail && curl -sS https://getcomposer.org/installer | php
+    executable: /bin/bash
   args:
     chdir: /usr/src/
     creates: /usr/local/bin/composer-setup.php

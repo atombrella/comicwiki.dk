@@ -2,7 +2,7 @@
 #   Enable/Disable SSL for this virtual host.
 SSLEngine on
 
-{% if lookup('ansible.builtin.env', 'HOSTNAME')  != 'localhost' %}
+{% if lookup('ansible.builtin.env', 'HOSTNAME') != 'instance' %}
 SSLCertificateFile    /etc/letsencrypt/live/www.comicwiki.dk/cert.pem
 SSLCertificateKeyFile /etc/letsencrypt/live/www.comicwiki.dk/privkey.pem
 SSLCertificateChainFile /etc/letsencrypt/live/www.comicwiki.dk/chain.pem

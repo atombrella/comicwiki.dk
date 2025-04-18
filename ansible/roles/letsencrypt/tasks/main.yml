@@ -1,4 +1,3 @@
----
 - name: Install certbot
   ansible.builtin.apt:
     name: "{{ packages }}"
@@ -54,9 +53,8 @@
     group: root
     mode: "0755"
 
-- name: Get www certificate
-  ansible.builtin.command: certbot certonly --standalone --agree-tos --register-unsafely-without-email -d www.comicwiki.dk -d comicwiki.dk
-  args:
-    creates: /etc/letsencrypt/live/www.comicwiki.dk
-  when: lookup('ansible.builtin.env', 'HOME') != "localhost"
-
+# - name: Get www certificate
+#   ansible.builtin.command:
+#     cmd: certbot certonly --standalone --agree-tos --register-unsafely-without-email -d www.comicwiki.dk -d comicwiki.dk
+#   args:
+#     creates: /etc/letsencrypt/live/www.comicwiki.dk
