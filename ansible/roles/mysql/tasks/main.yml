@@ -8,9 +8,8 @@
       - python3-mysqldb
       - python3-pip
       - python3-dev
-      - python-pip  # setuptools
       - libmysqlclient-dev
-      - python-mysql.connector
+      - python3-mysql.connector
 
 - name: Install MySQL packages
   ansible.builtin.apt:
@@ -23,15 +22,12 @@
   notify:
     - Restart mysql
 
-- name: Install pymysql
-  ansible.builtin.pip:
-    name: pymysql
-
 - name: Start MySQL
   ansible.builtin.service:
     name: mysql
     enabled: true
     state: restarted
+  become: true
 
 - name: Generate new root password
   ansible.builtin.command: |
@@ -41,40 +37,43 @@
   register: mysql_new_root_pass
 
 - name: Update root password
-  mysql_user:
+  community.mysql.mysql_user:
     name: "root"
     host: "{{ item }}"
     password: "{{ mysql_new_root_pass.stdout }}"
+    login_user: "root"
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+    login_password: ""
+    login_host: "localhost"
   with_items:
     - "{{ ansible_hostname }}"
-    - 127.0.0.1
-    - ::1
-    - localhost
+    - "127.0.0.1"
+    - "::1"
+    - "localhost"
   when: mysql_new_root_pass.changed
   tags:
     - skip_ansible_lint
+  become: true
 
 - name: Create my.cnf
   ansible.builtin.template:
-    src: templates/mysql/my.cnf
-    desc: /root/.my.cnf
+    src: "my.cnf.j2"
+    dest: "/root/.my.cnf"
+    mode: "0600"
+    owner: "root"
+    group: "root"
   when: mysql_new_root_pass.changed
   tags:
     - skip_ansible_lint
+  become: true
 
 - name: Create the database
   community.mysql.mysql_db:
     name: comicwiki
     state: present
-
-- name: Removes anonymous user account for localhost
-  community.mysql.mysql_user:
-    name: ''
-    host_all: true
-    state: absent
-
-# TODO set a password for the root user in mysql to get rid of the no-password
-# warning from mysqltuner
+    login_user: "root"
+    login_password: "{{ mysql_new_root_pass.stdout }}"
+  become: true
 
 - name: Make database user
   community.mysql.mysql_user:
@@ -84,7 +83,7 @@
     state: present
     user: "root"
     login_user: "root"
-    login_password: 'joke'
+    login_password: "{{ mysql_new_root_pass.stdout }}"
   notify:
     - Restart mysql
 
@@ -96,9 +95,10 @@
     mode: "0755"
     owner: root
     group: root
+  become: true
 
 - name: Create self-signed certificates
-  ansible.builtin.command: |
-    mysql_rsa_ssl_setup --uid=mysql
+  ansible.builtin.command:
+    cmd: mysql_rsa_ssl_setup --uid=mysql
   args:
     creates: /var/lib/mysql/server-cert.pem

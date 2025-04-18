@@ -1,3 +1,0 @@
-collections:
-  - community.mysql.mysql_db
-  - community.mysql.mysql_user

@@ -1,7 +1,9 @@
 ---
 galaxy_info:
-  author: Mads Jensen <mje@inducks.org>
+  author: Mads Jensen
   description: Configure MySQL installation
+  role_name: mysql
+  namespace: comicwiki
 
   # If the issue tracker for your role is not on github, uncomment the
   # next line and provide a value
