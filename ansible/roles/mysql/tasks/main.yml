@@ -67,12 +67,17 @@
     - skip_ansible_lint
   become: true
 
+- name: Set mysql user privileges
+  community.mysql.mysql_user:
+    name: root
+    priv: "comicwiki.*:ALL"
+    state: present
+  become: true
+
 - name: Create the database
   community.mysql.mysql_db:
     name: comicwiki
     state: present
-    login_user: "root"
-    login_password: "{{ mysql_new_root_pass.stdout }}"
   become: true
 
 - name: Make database user
