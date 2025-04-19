@@ -1,4 +1,5 @@
 ---
-- name: restart networking
-  ansible.builtin.command: netplan apply
+- name: Restart networking
+  ansible.builtin.command:
+    cmd: netplan apply
   become: true
