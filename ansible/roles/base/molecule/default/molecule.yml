@@ -3,16 +3,13 @@ dependency:
   name: galaxy
 driver:
   name: docker
-lint:
-  name: yamllint
 platforms:
   - name: instance
-    image: "ubuntu:18.04"
-    pull: true
-    hostname: comicwiki.dk
+    image: ubuntu:22.04
     privileged: true
-    volumes:
-      - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
+  - name: instance
+    image: ubuntu:24.04
+    privileged: true
 provisioner:
   name: ansible
   lint:
@@ -21,5 +18,9 @@ scenario:
   name: default
 verifier:
   name: testinfra
-  lint:
-    name: flake8
+lint: |
+  set -e
+
+  ansible-lint
+  flake8
+

@@ -1,4 +1,3 @@
----
 - name: Install certbot
   ansible.builtin.apt:
     name: "{{ packages }}"
@@ -13,7 +12,7 @@
   ansible.builtin.copy:
     src: cli.ini
     dest: /etc/letsencrypt/cli.ini
-    mode: 0644
+    mode: "0644"
     group: root
     owner: root
 
@@ -21,7 +20,7 @@
   ansible.builtin.file:
     path: "/etc/letsencrypt/renewal-hooks/{{ item }}"
     state: directory
-    mode: 0755
+    mode: "0755"
     owner: root
     group: root
     recurse: true
@@ -34,7 +33,7 @@
   ansible.builtin.file:
     path: "/etc/letsencrypt/renewal/"
     state: directory
-    mode: 0755
+    mode: "0755"
     owner: root
     group: root
 
@@ -42,7 +41,7 @@
   ansible.builtin.copy:
     src: apache.sh
     dest: /etc/letsencrypt/renewal-hooks/
-    mode: 0755
+    mode: "0755"
     owner: root
     group: root
 
@@ -52,11 +51,10 @@
     dest: /etc/cron.daily/cert-renew.sh
     owner: root
     group: root
-    mode: 0755
+    mode: "0755"
 
-- name: Get www certificate
-  ansible.builtin.command: certbot certonly --standalone --agree-tos --register-unsafely-without-email -d www.comicwiki.dk -d comicwiki.dk
-  args:
-    creates: /etc/letsencrypt/live/www.comicwiki.dk
-  when: inventory_hostname != 'localhost'
-  ignore_errors: true
+# - name: Get www certificate
+#   ansible.builtin.command:
+#     cmd: certbot certonly --standalone --agree-tos --register-unsafely-without-email -d www.comicwiki.dk -d comicwiki.dk
+#   args:
+#     creates: /etc/letsencrypt/live/www.comicwiki.dk

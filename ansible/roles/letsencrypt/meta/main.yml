@@ -2,10 +2,11 @@
 galaxy_info:
   author: Mads Jensen
   description: Role to manage letsencrypt certificates
+  namespace: comicwiki
 
   license: BSD
 
-  min_ansible_version: 1.2
+  min_ansible_version: "1.10"
 
   platforms:
     - name: Ubuntu
