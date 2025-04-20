@@ -10,8 +10,9 @@ configuration is based on a previous installation.  Some parts are controlled by
 Ansible, other parts were done manually afterwards, such as the import of the database
 and running the upgrade script to deal with schema migrations for a newer MediaWiki version.
 
-The [LESS stylesheet](http://lesscss.org/) was provided by [Joen Asmussen](http://moc.co)
+The [SASS stylesheet](https://sass-lang.com/) was provided by [Joen Asmussen](http://moc.co)
 Mediawiki is backed by the [Chameleon skin](https://www.mediawiki.org/wiki/Skin:Chameleon),
-using [Bootstrap 3.3](https://getbootstrap.com/docs/3.3/) as the primary frontend framework.
+using [Bootstrap 4](https://getbootstrap.com/docs/4.1/getting-started/introduction/) as the
+primary frontend framework.
 
 The code is running on a DigitalOcean droplet, with everything running on the same node.
