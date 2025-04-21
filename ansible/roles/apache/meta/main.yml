@@ -2,6 +2,9 @@
 galaxy_info:
   author: Mads Jensen
   description: Ansible role for managing the Apache configuration
+  role_name: apache     # if absent directory name hosting role is used instead
+  namespace: comicwiki  # if absent, author is used instead
+
 
   license: BSD
 
@@ -10,9 +13,7 @@ galaxy_info:
   platforms:
     - name: Ubuntu
       versions:
-        - 18
-        - 19
-        - 20
+        - all
 
   galaxy_tags: []
 

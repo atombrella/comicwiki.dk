@@ -147,11 +147,26 @@ $wgDefaultSkin = "chameleon";
 $egChameleonThemeFile = __DIR__ . '/resources/comicwiki/comicwiki.scss';
 
 $egChameleonAvailableLayoutFiles = [
-	'standard'   => __DIR__ . '/skins/chameleon/layouts/standard.xml',
-	'navhead'    => __DIR__ . '/resources/comicwiki/comicwiki-header.xml',
-	'fixedhead'  => __DIR__ . '/skins/chameleon/layouts/fixedhead.xml',
-	'stickyhead' => __DIR__ . '/skins/chameleon/layouts/stickyhead.xml',
-	'clean'      => __DIR__ . '/skins/chameleon/layouts/clean.xml',
+    'standard'   => __DIR__ . '/skins/chameleon/layouts/standard.xml',
+    'navhead'    => __DIR__ . '/resources/comicwiki/layouts/comicwiki-header.xml',
+    'fixedhead'  => __DIR__ . '/resources/comicwiki/layouts/fixedhead.xml',
+    'stickyhead' => __DIR__ . '/skins/chameleon/layouts/stickyhead.xml',
+    'clean'      => __DIR__ . '/skins/chameleon/layouts/clean.xml',
+];
+
+$egChameleonExternalLessVariables = [
+        'font-size-base' => '12px',
+        'font-size-large' => '16px',
+        'font-size-small' => '10px',
+        'font-size-h1' => '22px',
+        'font-size-h2' => '24px',
+        'font-size-h3' => '26px',
+        'line-height-base' => '1.5', /* 24 : 16 = */
+        'navbar-height' => '80px',
+        'navbar-margin-bottom' => '10px',
+        'navbar-default-bg' => 'rgba( 94, 157, 200, 1 )',
+        'navbar-default-border' => 'rgba( 94, 157, 200, 1 )',
+        'nav-tabs-active-link-hover-color' => 'rgba( 255, 255, 255, 1 )',
 ];
 
 # End of automatically generated settings.

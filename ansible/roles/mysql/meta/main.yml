@@ -1,7 +1,9 @@
 ---
 galaxy_info:
-  author: Mads Jensen <mje@inducks.org>
   description: Configure MySQL installation
+  author: Mads Jensen
+  namespace: comicwiki
+  company: your company (optional)
 
   # If the issue tracker for your role is not on github, uncomment the
   # next line and provide a value
@@ -25,9 +27,7 @@ galaxy_info:
   platforms:
     - name: Ubuntu
       versions:
-        - 18.04
-        - 18.10
-        - 19.04
+        - all
 
   galaxy_tags: []
 

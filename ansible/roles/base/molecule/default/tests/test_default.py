@@ -59,7 +59,7 @@ def test_ntp_activated(host):
 @pytest.mark.parametrize("package", [
     "ca-certificates",
     "git",
-    "python",
+    "python3",
     "openssl",
     "zip",
     "imagemagick",
@@ -77,4 +77,4 @@ def test_installed_packages(host, package):
 def test_domain_name_sysctl(host):
     command = host.run('sysctl kernel.domainname')
 
-    assert 'kernel.domainname = comicwiki.dk' == command.stdout
+    assert 'kernel.domainname = comicwiki.dk' == command.stdout.strip()

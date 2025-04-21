@@ -2,7 +2,7 @@
 - name: Converge
   hosts: all
   vars:
-    - run_in_container: true
+    run_in_container: true
   roles:
     - {role: base, become: true}
     - {role: apache, become: true}

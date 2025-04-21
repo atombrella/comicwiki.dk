@@ -90,8 +90,6 @@
     - {src: "comicwiki.css.map", dest: "/var/www/html/resources/comicwiki/comicwiki.css.map"}
     - {src: "comicwiki.js", dest: "/var/www/html/resources/comicwiki/comicwiki.js"}
   become: true
-  # notify:
-  #   - Reset chameleon
 
 - name: Copy over the local settings file
   ansible.builtin.template:
