@@ -27,3 +27,4 @@
     src: /usr/src/composer.phar
     remote_src: yes
   become: yes
+
