@@ -1,8 +1,13 @@
 ---
 - name: Save iptables
-  ansible.builtin.command: |
-    iptables-save > /etc/iptables/rules.v4 &&
-    ip6tables-save > /etc/iptables/rules.v6
+  community.general.iptables_state:
+    ip_version: "ip{{ item }}"
+    table: filter
+    state: saved
+    path: "/etc/iptables/rules.{{ item }}"
+  with_items:
+    - v4
+    - v6
 
 - name: Restart unattended-upgrades
   ansible.builtin.service:

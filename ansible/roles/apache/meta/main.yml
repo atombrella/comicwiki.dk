@@ -2,17 +2,18 @@
 galaxy_info:
   author: Mads Jensen
   description: Ansible role for managing the Apache configuration
+  role_name: apache
+  namespace: comicwiki
 
   license: BSD
 
-  min_ansible_version: 1.2
+  min_ansible_version: "1.10"
 
   platforms:
     - name: Ubuntu
       versions:
-        - 18
-        - 19
-        - 20
+        - "22.04"
+        - "24.04"
 
   galaxy_tags: []
 

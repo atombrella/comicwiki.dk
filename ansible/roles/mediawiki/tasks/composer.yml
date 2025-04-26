@@ -4,14 +4,17 @@
     checksum: "sha384:dac665fdc30fdd8ec78b38b9800061b4150413ff2e3b6f88543c636f7cd84f6db9189d43a81e5503cda447da73c7e5b6"
     dest: /usr/src/
     url: https://getcomposer.org/installer
-  become: yes
+    mode: "0644"
+  become: true
 
 - name: Download and install Composer
-  ansible.builtin.shell: curl -sS https://getcomposer.org/installer | php
+  ansible.builtin.shell:
+    cmd: set -o pipefail && curl -sS https://getcomposer.org/installer | php
+    executable: /bin/bash
   args:
     chdir: /usr/src/
     creates: /usr/local/bin/composer-setup.php
-  become: yes
+  become: true
 
 - name: List directory /usr/src/
   ansible.builtin.find:
@@ -21,9 +24,9 @@
 - name: Add Composer to global path
   ansible.builtin.copy:
     dest: /usr/local/bin/composer
+    src: /usr/src/composer.phar
     group: root
     mode: "0755"
     owner: root
-    src: /usr/src/composer.phar
-    remote_src: yes
-  become: yes
+    remote_src: true
+  become: true
