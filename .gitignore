@@ -18,6 +18,10 @@ __pycache__
 
 # Local setup
 ./db
+
 # This file always the .j2 extension for the template. Keep it here so we don't accidentally commit
 # sensitive data
 LocalSettings.php
+
+# Ansible
+.ansible

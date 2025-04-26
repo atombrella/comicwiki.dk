@@ -42,7 +42,7 @@
   ansible.builtin.copy:
     src: ntpdate.sh
     dest: /etc/cron.hourly/ntpdate.sh
-    mode: 0755
+    mode: "0755"
     owner: root
     group: root
   become: true

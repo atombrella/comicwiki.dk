@@ -5,10 +5,9 @@ galaxy_info:
   role_name: apache     # if absent directory name hosting role is used instead
   namespace: comicwiki  # if absent, author is used instead
 
-
   license: BSD
 
-  min_ansible_version: 1.2
+  min_ansible_version: "1.10"
 
   platforms:
     - name: Ubuntu
@@ -18,5 +17,5 @@ galaxy_info:
   galaxy_tags: []
 
 dependencies:
-  - base
-  - letsencrypt
+  - "base"
+  - "letsencrypt"

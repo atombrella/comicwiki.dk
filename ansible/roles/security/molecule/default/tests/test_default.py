@@ -1,6 +1,7 @@
 import os
 
 import pytest
+import testinfra.host
 import testinfra.utils.ansible_runner
 
 testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
@@ -68,9 +69,17 @@ def test_sysctl(host, setting, value):
     assert command.stdout == f"{setting} = {value}"
 
 
-def test_securetty(host):
+def test_securetty(host: testinfra.Host):
     file = host.file('/etc/securetty')
 
     assert file.exists
     assert file.owner == 'root'
     assert file.group == 'root'
+
+
+# def test_iptables_rules(host: testinfra.Host):
+#     # file = host.
+#
+#     assert file.exists
+#     assert file.owner == 'root'
+#     assert file.group == 'root'

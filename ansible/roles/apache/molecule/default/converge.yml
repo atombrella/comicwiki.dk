@@ -3,6 +3,7 @@
   hosts: all
   vars:
     run_in_container: true
+  gather_facts: true
   roles:
     - {role: base, become: true}
     - {role: apache, become: true}

@@ -52,7 +52,7 @@
   ansible.builtin.copy:
     src: "composer.local.json"
     dest: "/var/www/html/composer.local.json"
-    mode: 0644
+    mode: "0644"
     owner: www-data
     group: www-data
   become: true
@@ -95,7 +95,7 @@
   ansible.builtin.template:
     src: LocalSettings.php.j2
     dest: /var/www/html/LocalSettings.php
-    mode: 0400
+    mode: "0400"
     owner: www-data
     group: www-data
   become: true
@@ -111,7 +111,7 @@
   ansible.builtin.copy:
     src: favicon.ico
     dest: /var/www/html/favicon.ico
-    mode: 0644
+    mode: "0644"
     group: www-data
     owner: www-data
   become: true
@@ -120,7 +120,7 @@
   ansible.builtin.copy:
     src: robots.txt
     dest: /var/www/html/robots.txt
-    mode: 0644
+    mode: "0644"
     group: www-data
     owner: www-data
   become: true

@@ -1,7 +1,5 @@
 ---
 - name: Converge
   hosts: all
-  vars:
-    run_in_container: true
   roles:
     - {role: security, become: true}
