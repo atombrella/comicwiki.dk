@@ -23,6 +23,7 @@
       - python-is-python3
       - openssl
       - zip
+      - gpg
       - imagemagick
       - openssh-server
       - rsync
