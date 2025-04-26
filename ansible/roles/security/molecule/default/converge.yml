@@ -3,6 +3,5 @@
   hosts: all
   vars:
     run_in_container: true
-    no_log: false
   roles:
     - {role: security, become: true}
