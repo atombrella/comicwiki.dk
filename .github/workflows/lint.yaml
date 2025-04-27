@@ -32,7 +32,7 @@ jobs:
     - name: Lint Ansible roles
       run: |
         ansible-lint
-      working_directory: "${GITHUB_WORKSPACE}/ansible/roles"
+      working-directory: "${GITHUB_WORKSPACE}/ansible/roles"
 
     # - name: Analysing the code with pylint
     #   run: |
