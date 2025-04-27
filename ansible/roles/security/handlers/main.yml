@@ -13,8 +13,12 @@
   ansible.builtin.service:
     name: unattended-upgrades
     state: restarted
+  register: service
+  failed_when: service is failed
 
 - name: Restart ssh
   ansible.builtin.service:
     name: sshd
     state: restarted
+  register: service
+  failed_when: service is failed

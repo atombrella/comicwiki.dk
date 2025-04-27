@@ -11,9 +11,9 @@ services:
       - database
     restart: unless-stopped
     volumes:
-     - ./LocalSettings.php:/var/www/html/LocalSettings.php:ro
-     - ./logo.png:/var/www/html/resources/assets/logo.png:ro
-     - ./comicwiki:/var/www/html/resources/comicwiki:ro
+      - ./LocalSettings.php:/var/www/html/LocalSettings.php:ro
+      - ./logo.png:/var/www/html/resources/assets/logo.png:ro
+      - ./comicwiki:/var/www/html/resources/comicwiki:ro
   database:
     image: mariadb:10
     environment:

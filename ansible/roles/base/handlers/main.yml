@@ -2,4 +2,5 @@
 - name: Restart networking
   ansible.builtin.command:
     cmd: netplan apply
+  changed_when: rc.output == 0
   become: true

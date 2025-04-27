@@ -3,16 +3,22 @@
   ansible.builtin.service:
     name: apache2
     state: restarted
+  register: service
+  failed_when: (service is changed) or (service is failed)
   become: true
 
 - name: Stop apache
   ansible.builtin.service:
     name: apache2
     state: stopped
+  register: service
+  failed_when: (service is changed) or (service is failed)
   become: true
 
 - name: Reload apache
   ansible.builtin.service:
     name: apache2
     state: reloaded
+  register: service
+  failed_when: (service is changed) or (service is failed)
   become: true

@@ -19,13 +19,13 @@ def test_hosts_file(host: Host):
     assert f.group == 'root'
 
 
-def test_hostname(host):
+def test_hostname(host: Host):
     command = host.run('hostname')
 
     assert 'comicwiki.dk' in command.stdout
 
 
-def test_group(host):
+def test_group(host: Host):
     group = host.group('wheel')
 
     assert group.exists
@@ -79,7 +79,7 @@ def test_installed_packages(host: Host, package: str):
     assert pkg.is_installed
 
 
-def test_domain_name_sysctl(host):
+def test_domain_name_sysctl(host: Host):
     command = host.run('sysctl kernel.domainname')
 
     assert 'kernel.domainname = comicwiki.dk' == command.stdout.strip()
@@ -88,4 +88,4 @@ def test_domain_name_sysctl(host):
 def test_timezone(host: Host):
     command = host.run("realpath --relative-to /usr/share/zoneinfo /etc/localtime")
 
-    assert command.stdout.strip() == "Europe/Copenhagen"
+    assert command.stdout.strip() == "Europe/Copenhagen: Host: Host"

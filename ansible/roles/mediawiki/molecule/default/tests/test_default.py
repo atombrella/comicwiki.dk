@@ -9,20 +9,13 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
     os.environ['MOLECULE_INVENTORY_FILE']).get_hosts('all')
 
 
-def test_hosts_file(host):
-    f = host.file('/etc/hosts')
-
-    assert f.exists
-    assert f.user == 'root'
-    assert f.group == 'root'
-
-
-def test_hosts_file(host):
+def test_local_settings_file(host):
     f = host.file('/var/www/html/LocalSettings.php')
 
     assert f.exists
     assert f.user == 'www-data'
     assert f.group == 'www-data'
+    # add some more tests for the content of this file
 
 
 @pytest.mark.parametrize("image", [

@@ -1,4 +1,3 @@
----
 - name: Validate Composer checksum
   ansible.builtin.get_url:
     checksum: "sha384:dac665fdc30fdd8ec78b38b9800061b4150413ff2e3b6f88543c636f7cd84f6db9189d43a81e5503cda447da73c7e5b6"
@@ -28,12 +27,5 @@
     group: root
     mode: "0755"
     owner: root
-<<<<<<< HEAD
-    src: /usr/src/composer.phar
-    remote_src: yes
-  become: yes
-
-=======
     remote_src: true
   become: true
->>>>>>> 0bee0918d56667ed5214ada72a8e24dcdcf47eab
