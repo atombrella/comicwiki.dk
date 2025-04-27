@@ -3,8 +3,12 @@
   ansible.builtin.service:
     name: mysql
     state: restarted
+  register: service
+  failed_when: (service is changed) or (service is failed)
 
 - name: Start mysql
   ansible.builtin.service:
     name: mysql
     state: started
+  register: service
+  failed_when: (service is changed) or (service is failed)

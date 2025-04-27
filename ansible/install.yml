@@ -1,12 +1,10 @@
 ---
 - hosts: server
-  gather_facts: false
-  vars:
-    run_in_container: false
+  gather_facts: true
   roles:
-    - base
+    - {role: base, bcome: true}
     - {role: letsencrypt, become: true}
-    - apache
+    - {role: apache}
     - {role: mysql, become: true}
-    - mediawiki
+    - {role: mediawiki}
     - {role: security, become: true}

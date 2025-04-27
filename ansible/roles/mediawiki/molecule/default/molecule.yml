@@ -20,6 +20,8 @@ provisioner:
   config_options:
     defaults:
       vault_password_file: ~/vault.pw
+  env:
+    ANSIBLE_ROLES_PATH: ../../../
   lint:
     name: ansible-lint
 scenario:

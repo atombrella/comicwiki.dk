@@ -16,6 +16,14 @@
     - libapache2-mod-apparmor
   become: true
 
+# use the
+- name: Add Google apt repository key.
+  ansible.builtin.apt_key:
+    url: https://dl.google.com/linux/linux_signing_key.pub
+    keyring: /etc/apt/trusted.gpg.d/google.gpg
+    state: present
+  become: true
+
 - name: Install mod_pagespeed
   ansible.builtin.apt:
     deb: https://dl-ssl.google.com/dl/linux/direct/mod-pagespeed-stable_current_amd64.deb

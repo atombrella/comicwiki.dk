@@ -1,2 +1,2 @@
 ---
-# vars file for apache
+apache_run_in_container: false
