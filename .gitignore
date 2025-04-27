@@ -25,3 +25,4 @@ LocalSettings.php
 
 # Ansible
 .ansible
+ansible_collections
