@@ -1,0 +1,12 @@
+#include <tunables/global>
+
+/usr/sbin/apache2 flags=(complain) {
+  #include <abstractions/base>
+  #include <abstractions/lxc/container-base>
+
+  ^DEFAULT_URI flags=(complain) {
+  }
+
+  ^HANDLING_UNTRUSTED_INPUT flags=(complain) {
+  }
+}
