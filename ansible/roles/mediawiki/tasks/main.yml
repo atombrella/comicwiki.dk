@@ -151,3 +151,13 @@
     - {src: "images/Icon_ddfr.gif", dest: "/var/www/html/resources/comicwiki/images/Icon_ddfr.gif"}
     - {src: "images/logo.png", dest: "/var/www/html/resources/assets/logo.png"}
   become: true
+
+- name: Install the sendgrid extension
+  ansible.builtin.git:
+    repo: https://gerrit.wikimedia.org/r/mediawiki/extensions/SendGrid
+    depth: 1
+    dest: /var/www/html/extensions/sendgrid
+    version: REL1_39
+    update: false
+  become: true
+  become_user: "www-data"
