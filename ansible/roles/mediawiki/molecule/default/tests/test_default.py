@@ -3,6 +3,7 @@ import os
 
 import pytest
 
+import testinfra.host
 import testinfra.utils.ansible_runner
 
 testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
@@ -72,4 +73,18 @@ def test_composer_local_json(host):
 }"""
 
 
-# test the map and the other files comicwiki
+def test_sendgrid_extension(host: testinfra.host.Host):
+    f = host.file("/var/www/html/extensions/sendgrid")
+
+    assert f.exists
+    assert f.is_directory
+    assert f.user == "www-data"
+    assert f.group == "www-data"
+
+
+def test_sendgrid_composer_json(host: testinfra.host.Host):
+    f = host.file("/var/www/html/extensions/sendgrid/composer.json")
+
+    assert f.exists
+    assert f.user == "www-data"
+    assert f.group == "www-data"
