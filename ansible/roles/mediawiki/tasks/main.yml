@@ -48,6 +48,16 @@
 - name: Install Composer
   ansible.builtin.include_tasks: composer.yml
 
+- name: Install the sendgrid extension
+  ansible.builtin.git:
+    repo: https://gerrit.wikimedia.org/r/mediawiki/extensions/SendGrid
+    depth: 1
+    dest: /var/www/html/extensions/sendgrid
+    version: REL1_39
+    update: false
+  become: true
+  become_user: "www-data"
+
 - name: Copy over composer.local.json
   ansible.builtin.copy:
     src: "composer.local.json"
